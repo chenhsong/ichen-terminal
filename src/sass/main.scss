@@ -1,0 +1,130 @@
+﻿$ItemLineHeight: 1.2em;
+$StatusBarFontSize: 70%;
+
+body {
+	font: {
+		family: Arial, Helvetica, Helv, sans-serif;
+	}
+
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	color: black;
+	margin: 0;
+	padding: 0;
+	cursor: default;
+	-webkit-touch-callout: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+// Main app window
+terminal {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+// Loading indicator
+
+#imgLoading {
+	display: block;
+	position: absolute;
+	left: 0.5em;
+	top: $ItemLineHeight+0.5em;
+	width: 5em;
+	height: 5em;
+	z-index: 9;
+}
+
+// Status bar
+.terminal-server-status {
+	height: $ItemLineHeight;
+	line-height: $ItemLineHeight;
+	font-size: $StatusBarFontSize;
+
+	&:before {
+		padding-left: 0.5em;
+		color: white;
+	}
+
+	&.terminal-server-online {
+		background-color: green;
+
+		&:before {
+			content: "Online";
+		}
+	}
+
+	&.terminal-server-denied {
+		background-color: yellow;
+		border-bottom: solid 1px lightgray;
+
+		&:before {
+			content: "Access denied";
+			color: red;
+		}
+	}
+
+	&.terminal-server-offline {
+		background-color: black;
+
+		&:before {
+			content: "Offline";
+			font-weight: bold;
+		}
+	}
+
+	&.terminal-server-connecting {
+		background-color: mediumpurple;
+
+		&:before {
+			content: "Connecting...";
+		}
+	}
+
+	&.terminal-server-error {
+		background-color: orangered;
+
+		&:before {
+			content: "An error has occurred.";
+		}
+	}
+}
+
+// Change settings button
+#btnChangeSettings {
+	display: inline-block;
+	width: 3em;
+	height: $ItemLineHeight;
+	line-height: $ItemLineHeight;
+	float: right;
+	text-align: center;
+	background: orange;
+	cursor: pointer;
+}
+
+// Main canvas
+controllers {
+	display: block;
+	position: absolute;
+	top: $ItemLineHeight * ($StatusBarFontSize / 100%);
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-image: url(../../images/background.png);
+	background-repeat: repeat;
+}
+
+@import "_display";
+
+// CAUTION: Import these styles at the end so these styles will override the default,
+//			even though their specificities are the same.
+
+@import "_colors";
+@import "_others";

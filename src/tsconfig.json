@@ -1,0 +1,22 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"target": "es5",
+		"module": "system",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"removeComments": false,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"noImplicitThis": true,
+		"noImplicitReturns": true,
+		"outDir": "../scripts",
+		"outFile": "../scripts/script.js"
+	},
+	"exclude": [
+		"node_modules",
+		"jspm_packages"
+	]
+}
