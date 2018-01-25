@@ -1,11 +1,9 @@
 ﻿$ItemLineHeight: 1.2em;
 $StatusBarFontSize: 70%;
-
 body {
 	font: {
 		family: Arial, Helvetica, Helv, sans-serif;
 	}
-
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -31,7 +29,6 @@ terminal {
 }
 
 // Loading indicator
-
 #imgLoading {
 	display: block;
 	position: absolute;
@@ -47,50 +44,39 @@ terminal {
 	height: $ItemLineHeight;
 	line-height: $ItemLineHeight;
 	font-size: $StatusBarFontSize;
-
 	&:before {
 		padding-left: 0.5em;
 		color: white;
 	}
-
 	&.terminal-server-online {
 		background-color: green;
-
 		&:before {
 			content: "Online";
 		}
 	}
-
 	&.terminal-server-denied {
 		background-color: yellow;
 		border-bottom: solid 1px lightgray;
-
 		&:before {
 			content: "Access denied";
 			color: red;
 		}
 	}
-
 	&.terminal-server-offline {
 		background-color: black;
-
 		&:before {
 			content: "Offline";
 			font-weight: bold;
 		}
 	}
-
 	&.terminal-server-connecting {
 		background-color: mediumpurple;
-
 		&:before {
 			content: "Connecting...";
 		}
 	}
-
 	&.terminal-server-error {
 		background-color: orangered;
-
 		&:before {
 			content: "An error has occurred.";
 		}
@@ -117,14 +103,12 @@ controllers {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-image: url(../../images/background.png);
+	background-image: url(../images/background.png);
 	background-repeat: repeat;
 }
 
 @import "_display";
-
 // CAUTION: Import these styles at the end so these styles will override the default,
 //			even though their specificities are the same.
-
 @import "_colors";
 @import "_others";
