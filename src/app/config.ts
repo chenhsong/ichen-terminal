@@ -23,7 +23,7 @@ export const HTML = {
 
 export const CSS = {
 	imagesUrl: "images",
-	imgLoading: "loading.gif",
+	imgLoading: "common/loading.gif",
 	serverStatus: `${appClassPrefix}-server-status`,
 	serverStatusOnLine: `${appClassPrefix}-server-online`,
 	serverStatusDenied: `${appClassPrefix}-server-denied`,

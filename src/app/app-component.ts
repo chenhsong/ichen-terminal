@@ -1,9 +1,10 @@
 ﻿import { Component, ChangeDetectionStrategy, Input, Output, enableProdMode } from "@angular/core";
 import { Http } from "@angular/http";
 import { Observable, Subject } from "rxjs/Rx";
-import { DataStoreService } from "./services/DataStoreService";
-import { NetworkService, NetworkState } from "./services/NetworkService";
-import {
+import { DataStoreService } from "./services/data-store-service";
+import { NetworkService, NetworkState } from "./services/network-service";
+import
+{
 	MessageService,
 	IResponseMessage,
 	IAliveMessage,
@@ -14,7 +15,7 @@ import {
 	ICycleDataMessage,
 	IControllerStatusMessage,
 	IControllerActionMessage
-} from "./services/MessageService";
+} from "./services/message-service";
 import { mixinDictionaryToMap, mixin } from "./utils/utils";
 import { Config, HTML, CSS, Constants } from "./config";
 

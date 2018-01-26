@@ -1,5 +1,5 @@
 ﻿import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { DataStoreService } from "../services/DataStoreService";
+import { DataStoreService } from "../services/data-store-service";
 import { HTML } from "../config";
 import { buildTemplate } from "./controller-template";
 

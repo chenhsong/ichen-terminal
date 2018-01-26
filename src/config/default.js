@@ -1,5 +1,4 @@
 ﻿var Config = {
-	"urlXXX": "ws://112.120.195.62:5788",
 	"filter": "Status, Alarms, Audit, Cycle, Actions",
 	"settings": {
 		"TestingMode": false,

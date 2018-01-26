@@ -2,9 +2,9 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
 
-import { DataStoreService } from "./services/DataStoreService";
-import { NetworkService } from "./services/NetworkService";
-import { MessageService } from "./services/MessageService";
+import { DataStoreService } from "./services/data-store-service";
+import { NetworkService } from "./services/network-service";
+import { MessageService } from "./services/message-service";
 
 import CanvasStylesPipe from "./services/canvas-styles.pipe";
 import ControllerFrameStylesPipe from "./services/controller-frame-styles.pipe";
@@ -17,8 +17,7 @@ import { AppComponent } from "./app-component";
 import { ControllerComponent } from "./views/controller";
 import { ControllersListComponent } from "./views/controllers";
 
-@NgModule(
-{
+@NgModule({
 	imports: [BrowserModule, HttpModule],
 
 	declarations: [
