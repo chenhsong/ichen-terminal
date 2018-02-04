@@ -10,13 +10,21 @@
 		"experimentalDecorators": true,
 		"removeComments": false,
 		"noImplicitAny": true,
-		"strictNullChecks": true,
+		"strict": true,
 		"noImplicitThis": true,
 		"noImplicitReturns": true,
-		"typeRoots": [ "node_modules/@types" ],
-		"lib": [ "es2017", "dom" ],
+		"typeRoots": [
+			"node_modules/@types"
+		],
+		"lib": [
+			"es2017",
+			"dom"
+		],
 		"outDir": "scripts"
 		/*"outFile": "scripts/script.js"*/
 	},
-	"exclude": [ "node_modules", "jspm_packages" ]
+	"exclude": [
+		"node_modules",
+		"jspm_packages"
+	]
 }

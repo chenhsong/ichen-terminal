@@ -56,7 +56,7 @@ export class AppComponent
 
 	public readonly controllersList = new Subject<IControllerState[]>();
 	public serverStatus = CSS.serverStatusOffLine;
-	private joinHandle: any = null;
+	private joinHandle: number | null = null;
 
 	constructor(http: Http, private network: NetworkService<IResponseMessage>, private message: MessageService, private dataStore: DataStoreService<number, IControllerState>)
 	{
@@ -177,8 +177,8 @@ export class AppComponent
 						this.message.create("Join", {
 							language: "EN",
 							version: "1.0.0",
-							orgId: Config.orgId || null,
-							password: Config.password || null,
+							orgId: Config.orgId,
+							password: Config.password || "",
 							filter: Config.filter
 						})
 					);

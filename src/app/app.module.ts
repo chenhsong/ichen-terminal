@@ -13,7 +13,7 @@ import FlattenPipe from "./services/flatten.pipe";
 import TextMapPipe from "./services/text-map.pipe";
 import DecimalPipe from "./services/decimal.pipe";
 
-import { AppComponent } from "./app-component";
+import { AppComponent } from "./app.component";
 import { ControllerComponent } from "./views/controller";
 import { ControllersListComponent } from "./views/controllers";
 

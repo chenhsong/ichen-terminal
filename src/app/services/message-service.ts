@@ -1,7 +1,7 @@
 ﻿import { Inject, Injectable } from "@angular/core";
 
 // Enum types
-export type CommandMessageTypes = "Alive" | "RequestControllersList" | "Join" | "RequestMoldData" | "JobCardsList" | "OperatorInfo";
+export type CommandMessageTypes = "Alive" | "RequestControllersList" | "Join" | "RequestMoldData" | "ReadMoldData" | "JobCardsList" | "OperatorInfo";
 export type ValidMessageTypes = CommandMessageTypes | "ControllersList" | "JoinResponse" | "MoldData" | "CycleData" | "ControllerAction" | "ControllerStatus" | "RequestJobCardsList" | "LoginOperator";
 export type DeprecatedMessageTypes = "Preferences" | "SystemMessage" | "UpdateControllerInfo" | "UpdateLanguage";
 
@@ -13,7 +13,7 @@ export interface IMessageBase
 	$type: ValidMessageTypes | DeprecatedMessageTypes;
 }
 
-export type ICommandMessage = IAliveMessage | IRequestControllersListMessage | IJoinMessage | IRequestMoldDataMessage | IJobCardsListMessage | IOperatorInfoMessage;
+export type ICommandMessage = IAliveMessage | IRequestControllersListMessage | IJoinMessage | IRequestMoldDataMessage | IReadMoldDataMessage | IJobCardsListMessage | IOperatorInfoMessage;
 export type IDeprecatedMessage = IPreferencesMessage | ISystemMessageMessage | IUpdateControllerInfoMessage | IUpdateLanguageMessage;
 export type IResponseMessage = IAliveMessage | IControllersListMessage | IJoinResponseMessage | IMoldDataMessage | ICycleDataMessage | IControllerActionMessage | IControllerStatusMessage | IRequestJobCardsListMessage | ILoginOperatorMessage;
 export type IMessage = ICommandMessage | IResponseMessage | IDeprecatedMessage;
@@ -58,6 +58,11 @@ export interface IJoinResponseMessage extends IMessageBase
 export interface IRequestMoldDataMessage extends IControllerSpecificMessage
 {
 	$type: "RequestMoldData";
+}
+export interface IReadMoldDataMessage extends IControllerSpecificMessage
+{
+	$type: "ReadMoldData";
+	field: string;
 }
 export interface IDictionaryMessage extends IDataDictionaryMessage<number>, IControllerSpecificMessage
 {
@@ -143,6 +148,8 @@ export interface IOperatorInfoMessage extends IControllerSpecificMessage
 	level: number;
 }
 
+function throwParamError(msg: string) { throw new Error(`Invalid parameters for ${msg}`); }
+
 @Injectable()
 export class MessageService
 {
@@ -154,44 +161,71 @@ export class MessageService
 	public create(type: "Join", params: { language: Languages; version: string; orgId?: string; password: string; filter?: string; }, priority?: number): IJoinMessage;
 	public create(type: "RequestControllersList", priority?: number): IRequestControllersListMessage;
 	public create(type: "RequestMoldData", controllerId: number, priority?: number): IRequestMoldDataMessage;
+	public create(type: "ReadMoldData", params: { controllerId: number; field: string; }, priority?: number): IReadMoldDataMessage;
 	public create(type: "JobCardsList", params: { controllerId: number; jobCards: IJobCard[]; }, priority?: number): IJobCardsListMessage;
 	public create(type: "OperatorInfo", params: { controllerId: number; operatorId: number; name: string; password: string; level: number; }, priority?: number): IOperatorInfoMessage;
-	public create(type: string, params?: any, priority?: number): ICommandMessage;
-	public create(type: CommandMessageTypes, params?: any, priority?: number): ICommandMessage
+	public create(type: CommandMessageTypes, params?: Dictionary<any> | number, priority?: number): ICommandMessage
 	{
 		const msg = { $type: type, sequence: this.nextSequenceNumber, priority: priority || 0 } as ICommandMessage;
 
-		switch (msg.$type) {
+		switch (type) {
 			case "Alive": {
-				msg.priority = (params === undefined || params === null) ? -10 : (params || 0);		// Default value = -10
+				msg.priority = (typeof params === "number") ? params : -10;		// Default value = -10
 				break;
 			}
+
 			case "Join": {
-				msg.language = params.language;
-				msg.version = params.version;
-				if (params.orgId) msg.orgId = params.orgId;
-				msg.password = params.password;
-				msg.filter = params.filter;
+				if (!params || typeof params !== "object") throw throwParamError(type);
+
+				const jmsg = msg as IJoinMessage;
+				jmsg.language = params.language;
+				jmsg.version = params.version;
+				if (params.orgId) jmsg.orgId = params.orgId;
+				jmsg.password = params.password;
+				jmsg.filter = params.filter;
 				break;
 			}
-			case "RequestControllersList": break;
+
+			case "RequestControllersList":
+				break;
+
 			case "RequestMoldData": {
-				msg.controllerId = params;
+				if (!params || typeof params !== "object") throw throwParamError(type);
+
+				const rmsg = msg as IRequestMoldDataMessage;
+				rmsg.controllerId = params.controllerId;
 				break;
 			}
+
+			case "ReadMoldData": {
+				if (!params || typeof params !== "object") throw throwParamError(type);
+
+				const rmsg = msg as IReadMoldDataMessage;
+				rmsg.controllerId = params.controllerId;
+				rmsg.field = params.field;
+				break;
+			}
+
 			case "JobCardsList": {
+				if (!params || typeof params !== "object") throw throwParamError(type);
+
+				const jcmsg = msg as IJobCardsListMessage;
 				const list = params.jobCards as IJobCard[];
-				msg.controllerId = params.controllerId;
-				msg.data = {};
-				list.forEach(jc => msg.data[jc.jobCardId] = jc);
+				jcmsg.controllerId = params.controllerId;
+				jcmsg.data = {};
+				for (const jc of list) jcmsg.data[jc.jobCardId] = jc;
 				break;
 			}
+
 			case "OperatorInfo": {
-				msg.controllerId = params.controllerId;
-				msg.operatorId = params.operatorId;
-				msg.name = params.name;
-				msg.password = params.password;
-				msg.level = params.level;
+				if (!params || typeof params !== "object") throw throwParamError(type);
+
+				const omsg = msg as IOperatorInfoMessage;
+				omsg.controllerId = params.controllerId;
+				omsg.operatorId = params.operatorId;
+				omsg.name = params.name;
+				omsg.password = params.password;
+				omsg.level = params.level;
 				break;
 			}
 		}

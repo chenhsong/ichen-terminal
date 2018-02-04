@@ -4,7 +4,7 @@ import { Config, CSS } from "../config";
 @Pipe({ name: "canvasStyles" })
 export default class CanvasStylesPipe implements PipeTransform
 {
-	transform(value: any): PropertiesMap | null
+	transform(): PropertiesMap | null
 	{
 		if (!Config.canvas) return null;
 		if (!Config.canvas.background) return null;

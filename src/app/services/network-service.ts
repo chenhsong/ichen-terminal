@@ -57,7 +57,7 @@ export class NetworkService<T>
 			this.isConnectionAlive = true;
 
 			// Prepare the messages stream
-			ws.getDataStream().map((m: any) =>
+			ws.getDataStream().map(m =>
 			{
 				// Parse JSON message
 				try {
@@ -66,8 +66,8 @@ export class NetworkService<T>
 					console.error(`Cannot parse JSON message (${err}):\n${m.data}`);
 					return null;
 				}
-			}).filter((m: T | null) => !!m)
-				.subscribe((x: T) => this.dataStream.next(x));
+			}).filter(m => !!m)
+				.subscribe(x => this.dataStream.next(x as T));
 
 			// Reset reconnection interval
 			this.reconnectionInterval = Config.settings.ServerReconnectionInterval;
