@@ -16,8 +16,8 @@ import
 	IControllerStatusMessage,
 	IControllerActionMessage
 } from "./services/message-service";
-import { mixinDictionaryToMap, mixin } from "./utils/utils";
-import { Config, HTML, CSS, Constants } from "./config";
+import { mixinDictionaryToMap } from "./utils/utils";
+import { Config, HTML, CSS, Constants } from "./app.config";
 
 enableProdMode();
 
@@ -52,7 +52,7 @@ export class AppComponent
 	private lastServerTickTime = 0;
 	private lastSyncControllersListTime = Date.now();
 	private layoutThreshold = 600;
-	private statusBar: HTMLDivElement;
+	private statusBar: HTMLDivElement | null = null;
 
 	public readonly controllersList = new Subject<IControllerState[]>();
 	public serverStatus = CSS.serverStatusOffLine;
@@ -171,7 +171,7 @@ export class AppComponent
 				// Loop send JOIN
 				if (this.joinHandle !== null) clearInterval(this.joinHandle);
 
-				this.joinHandle = setInterval(() =>
+				this.joinHandle = <number><any>setInterval(() =>
 				{
 					this.network.sendObject(
 						this.message.create("Join", {
@@ -285,7 +285,8 @@ export class AppComponent
 						this.dataStore.set(id, state);
 						console.log(`Controller ${ctrl.displayName} [${id}] has joined.`);
 					}
-					mixin(ctrl, this.dataStore.get(id));
+
+					Object.assign(this.dataStore.get(id), ctrl);
 
 					this.updateControllersList();
 				}

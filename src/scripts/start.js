@@ -1,6 +1,5 @@
 ﻿/* This is a start-up file that prepares the terminal configuration object Config
- * used by the app to build its UI.  Config must be loaded (from an external JS file)
- * BEFORE bootstraping Angular.
+ * used by the app to build its UI template. Config must be loaded BEFORE bootstraping Angular.
  */
 
 // Create the global variable
@@ -10,7 +9,7 @@ var Config = Config;
 	var orgId = null;
 	var pwd = null;
 
-	if (!Config) {
+	if (!Config || !Config.password) {
 		// Get password from local storage
 		if (localStorage) pwd = localStorage.getItem("password");
 
@@ -33,19 +32,24 @@ var Config = Config;
 		}
 
 		console.debug("Org = [" + orgId + "], Password = [" + pwd + "]");
+	} else {
+		orgId = Config.orgId;
+		pwd = Config.password;
+	}
 
-		// Load the config script
-		var head = document.getElementsByTagName("head")[0];
-		var script = document.createElement("script");
-		script.src = "config/" + (orgId || "default") + ".js";
-		script.onload = function() {
-			Config.orgId = orgId;
-			Config.password = pwd;
-		};
-		script.onerror = function() {
-			document.body.textContent = "AN ERROR HAS OCCURRED.";
-			throw new Error("Missing Config file.");
-		};
-		head.appendChild(script);
+	if (!Config) {
+		// NOTE: We use document.write here because we want to MAKE SURE that the
+		//       Config file is loaded BEFORE bootstraping Angular
+
+		// Load the Config file
+		document.write("<script src='config/" + (orgId || "default") + ".js'></script>");
+
+		// Update the org ID and password
+		var stmt = "if (!Config.orgId) Config.orgId=" + JSON.stringify(orgId) + ";";
+		stmt += "if (!Config.password) Config.password=" + JSON.stringify(pwd) + ";";
+		document.write("<script>" + stmt + "</script>");
+	} else {
+		if (!Config.orgId) Config.orgId = orgId;
+		if (!Config.password) Config.password = pwd;
 	}
 })();

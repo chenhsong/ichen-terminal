@@ -1,5 +1,5 @@
 ﻿import { Pipe, PipeTransform } from "@angular/core";
-import { Config } from "../config";
+import { Config } from "../app.config";
 
 @Pipe({ name: "controllerStyles" })
 export default class ControllerStylesPipe implements PipeTransform

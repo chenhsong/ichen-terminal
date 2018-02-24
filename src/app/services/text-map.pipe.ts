@@ -1,5 +1,5 @@
 ﻿import { Pipe, PipeTransform } from "@angular/core";
-import { Config, CSS, Constants, getCurrentLang } from "../config";
+import { Config, CSS, Constants, getCurrentLang } from "../app.config";
 
 @Pipe({ name: "textMap" })
 export default class TextMapPipe implements PipeTransform

@@ -7,7 +7,6 @@
 		"root": "src",
 		"outDir": "dist",
 		"assets": [
-			"scripts",
 			"config",
 			"images",
 			"stylesheets/main.min.css",
@@ -18,7 +17,9 @@
 		"polyfills": "polyfills.ts",
 		"tsconfig": "tsconfig.app.json",
 		"prefix": "app",
-		"scripts": [],
+		"scripts": [
+			"scripts/start.js"
+		],
 		"environmentSource": "environments/environment.ts",
 		"environments": {
 			"dev": "environments/environment.ts",

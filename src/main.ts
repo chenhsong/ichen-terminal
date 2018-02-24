@@ -1,6 +1,6 @@
 ﻿import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { AppModule } from "./app/app.module";
-import { HTML, Config } from "./app/config";
+import { HTML, Config } from "./app/app.config";
 
 // Get WebSocket URL
 if (!Config.url) {

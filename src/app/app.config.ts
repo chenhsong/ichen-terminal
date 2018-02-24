@@ -55,4 +55,6 @@ if (localStorage) {
 
 declare var Config: Terminal.IConfig;
 
-export { Config };
+const cfg = Config;
+
+export { cfg as Config };

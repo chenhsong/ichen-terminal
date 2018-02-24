@@ -22,7 +22,7 @@ export class DataStoreService<K, T>
 		this.dataStore.delete(id.toString());
 		if (typeof id !== "string") this.raiseChangeEvent(id);
 	}
-	public get size(): number { return this.dataStore.size }
+	public get size(): number { return this.dataStore.size; }
 	public keys() { return this.dataStore.keys(); }
 	public values() { return this.dataStore.values(); }
 

@@ -1,6 +1,6 @@
 ﻿import { Component, Input, Output, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs/Rx";
-import { HTML, CSS } from "../config";
+import { HTML, CSS } from "../app.config";
 
 @Component({
 	selector: HTML.controllersList,
@@ -16,7 +16,7 @@ import { HTML, CSS } from "../config";
 })
 export class ControllersListComponent
 {
-	@Input() public readonly controllersList: Observable<IControllerState[]>;
+	@Input() public readonly controllersList!: Observable<IControllerState[]>;
 
 	// Do not regenerate list excessively
 	public trackByController(index: number, ctrl: IControllerState) { return ctrl.controllerId; }

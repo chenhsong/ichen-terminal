@@ -1,6 +1,6 @@
 ﻿import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { DataStoreService } from "../services/data-store-service";
-import { HTML } from "../config";
+import { HTML } from "../app.config";
 import { buildTemplate } from "./controller-template";
 
 @Component({
@@ -10,7 +10,7 @@ import { buildTemplate } from "./controller-template";
 })
 export class ControllerComponent
 {
-	@Input() public readonly state: IControllerState;
+	@Input() public readonly state!: IControllerState;
 
 	public isCollapsed = (window.innerWidth < 600);
 

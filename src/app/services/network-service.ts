@@ -1,7 +1,7 @@
 ﻿import { Inject, Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs/Rx";
 import { $WebSocket, WebSocketConfig } from "angular2-websocket/angular2-websocket";
-import { Config } from "../config";
+import { Config } from "../app.config";
 
 export enum NetworkState
 {
@@ -11,7 +11,7 @@ export enum NetworkState
 @Injectable()
 export class NetworkService<T>
 {
-	private webSocket: $WebSocket;
+	private webSocket: $WebSocket | null = null;
 	private webSocketInProgress: $WebSocket | null = null;
 	private isConnectionAlive = false;
 	private reconnectionInterval = 0;
@@ -142,7 +142,7 @@ export class NetworkService<T>
 	{
 		if (Config.settings.TestingMode) return;
 		if (!this.isInitialized) throw new Error("Connection not yet made.");
-		this.webSocket.close(true);
+		this.webSocket!.close(true);
 	}
 
 	public sendObject(obj: {})
@@ -151,7 +151,7 @@ export class NetworkService<T>
 		if (!this.isConnectionAlive) return;
 		if (!this.isInitialized) throw new Error("Connection not yet made.");
 
-		console.log(this.webSocket.getReadyState(), "Sending message", obj);
-		this.webSocket.send(JSON.stringify(obj)).subscribe();
+		console.log(this.webSocket!.getReadyState(), "Sending message", obj);
+		this.webSocket!.send(JSON.stringify(obj)).subscribe();
 	}
 }

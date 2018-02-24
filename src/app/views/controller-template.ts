@@ -1,4 +1,4 @@
-﻿import { HTML, CSS, Config } from "../config";
+﻿import { HTML, CSS, Config } from "../app.config";
 import { formatStateVariable, createClassesMap } from "../utils/utils";
 
 // Build the template for the main display box
