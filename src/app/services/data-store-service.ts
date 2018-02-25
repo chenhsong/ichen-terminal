@@ -1,5 +1,6 @@
 ﻿import { Inject, Injectable, ChangeDetectorRef } from "@angular/core";
-import { Observable, Subject } from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
 
 @Injectable()
 export class DataStoreService<K, T>

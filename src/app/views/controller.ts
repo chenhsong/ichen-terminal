@@ -1,4 +1,5 @@
 ﻿import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
+import "rxjs/add/operator/filter";
 import { DataStoreService } from "../services/data-store-service";
 import { HTML } from "../app.config";
 import { buildTemplate } from "./controller-template";

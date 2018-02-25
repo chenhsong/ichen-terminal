@@ -1,6 +1,9 @@
 ﻿import { Component, ChangeDetectionStrategy, Input, Output, enableProdMode } from "@angular/core";
 import { Http } from "@angular/http";
-import { Observable, Subject } from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/do";
 import { DataStoreService } from "./services/data-store-service";
 import { NetworkService, NetworkState } from "./services/network-service";
 import
@@ -70,7 +73,7 @@ export class AppComponent
 
 		if (maps) {
 			maps = Array.isArray(maps) ? maps : [maps];
-			usesAction = maps.some(map => map.field === Constants.actionIdField);
+			usesAction = maps.some(m => m.field === Constants.actionIdField);
 		}
 
 		if (!usesAction) {
@@ -82,7 +85,7 @@ export class AppComponent
 					let mp = Config.controllers.default.maps;
 					if (mp) {
 						mp = Array.isArray(mp) ? mp : [mp];
-						if (mp.some(map => map.field === Constants.actionIdField)) {
+						if (mp.some(m => m.field === Constants.actionIdField)) {
 							usesAction = true;
 							break;
 						}
