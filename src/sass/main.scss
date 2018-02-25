@@ -1,9 +1,11 @@
 ﻿$ItemLineHeight: 1.2em;
 $StatusBarFontSize: 70%;
+
 body {
 	font: {
 		family: Arial, Helvetica, Helv, sans-serif;
 	}
+
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -20,7 +22,9 @@ body {
 	user-select: none;
 }
 
-// Main app window
+
+/* Main app window */
+
 terminal {
 	display: block;
 	position: relative;
@@ -28,7 +32,9 @@ terminal {
 	height: 100%;
 }
 
-// Loading indicator
+
+/* Loading indicator */
+
 #imgLoading {
 	display: block;
 	position: absolute;
@@ -39,51 +45,66 @@ terminal {
 	z-index: 9;
 }
 
-// Status bar
+
+/* Status bar */
+
 .terminal-server-status {
 	height: $ItemLineHeight;
 	line-height: $ItemLineHeight;
 	font-size: $StatusBarFontSize;
+
 	&:before {
 		padding-left: 0.5em;
 		color: white;
 	}
+
 	&.terminal-server-online {
 		background-color: green;
+
 		&:before {
 			content: "Online";
 		}
 	}
+
 	&.terminal-server-denied {
 		background-color: yellow;
 		border-bottom: solid 1px lightgray;
+
 		&:before {
 			content: "Access denied";
 			color: red;
 		}
 	}
+
 	&.terminal-server-offline {
 		background-color: black;
+
 		&:before {
 			content: "Offline";
 			font-weight: bold;
 		}
 	}
+
 	&.terminal-server-connecting {
 		background-color: mediumpurple;
+
 		&:before {
 			content: "Connecting...";
 		}
 	}
+
 	&.terminal-server-error {
 		background-color: orangered;
+
 		&:before {
 			content: "An error has occurred.";
 		}
 	}
 }
 
-// Change settings button
+
+/* Change settings button */
+
 #btnChangeSettings {
 	display: inline-block;
 	width: 3em;
@@ -95,7 +116,9 @@ terminal {
 	cursor: pointer;
 }
 
-// Main canvas
+
+/* Main canvas */
+
 controllers {
 	display: block;
 	position: absolute;
@@ -108,7 +131,10 @@ controllers {
 }
 
 @import "_display";
-// CAUTION: Import these styles at the end so these styles will override the default,
-//			even though their specificities are the same.
+
+
+/* CAUTION: Import these styles at the end so these styles will override the default,
+            even though their specificities are the same. */
+
 @import "_colors";
 @import "_others";

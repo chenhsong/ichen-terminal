@@ -9,21 +9,26 @@ $ItemPadding: $ItemLineHeight / 5;
 $ToggleButtonSize: 1em;
 $IsSmartPhone: "only screen and (max-device-width: 399px)";
 $IsPhablet: "only screen and (max-device-width: 799px)";
-// Controller display box
+
+
+/* Controller display box */
+
 terminal-controller {
 	display: inline-block;
 	width: $BlockWidth;
 	margin: $BlockMargin;
 	vertical-align: top;
+
 	@media #{$IsPhablet} {
-		// Override absolute layouts - change to wrap-flowing for large phones and tablets
+		/* Override absolute layouts - change to wrap-flowing for large phones and tablets */
 		position: static !important;
 		display: inline-block !important;
 		margin: $BlockMargin !important;
 		width: $BlockWidth * 1.2;
 	}
+
 	@media #{$IsSmartPhone} {
-		// Override absolute layouts - change to stacked for small phones
+		/* Override absolute layouts - change to stacked for small phones */
 		display: block !important;
 		width: auto !important;
 		margin: $BlockMargin*2 $BlockMargin !important;
@@ -37,6 +42,7 @@ terminal-controller {
 	border-radius: $FrameSpacing;
 	box-shadow: gray 0 0 0.3em;
 	background-color: white;
+
 	&:after {
 		content: " ";
 		display: block;
@@ -51,12 +57,14 @@ terminal-controller {
 		background-repeat: no-repeat;
 		cursor: pointer;
 	}
+
 	&.ctrl-collapsed:after {
 		background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAC/0lEQVR4Aa2VA7BdSRCGe89ce6XYtm27EBuF2Nk4z1YhtlOKbdtYKVmWn3Gl7pk7z9L8dTzfN33MfBBUpbAgqFqrBoECnwFNFOBT6Y36CYaHBWmB8ShSUyosMEGoaI0FmXBFjZNKKkodm0DqrcEQp2ZBX9AGJk9RGk6QBnSgpQjBd7hJOzS4yQICXwm4GvvpeQwYYlBQD/Qp1tXx3Z/qFVIIAaZYHDEjxgSmxdu/+ljTToJG6bYJx080fzl67HUtdVMIpxSLm0Wm7N/X+vWIAXe+cLGgZhP3X/wW4E/Dq+Fjb6FC4ZBPTEVwC1jBMm37sQYA/6ufDp93igU1zlJud3QAwB/6l4PG3dUILK8GpQBuA+u0pKP1AZsKFlzp9RKvQYdPNR032wnFqwEDn5sd+QRydKPEp8cfrSfw8Es/7AMHC6oBSttPte032hL3u/7toEGPuUI+OCo+ukngM+KP1BV4xOU1ByAbcljQl9SxzV9S8aeKK5wI8/LpxiFupcyIO1yHcDXEXFl5ALIoLMgsLlibj7UdUvFm0ODHZhc9NvTQUPkF8ajLK/ZBBoUEWvCAF3yo+DOfYuDgp2Y3qBEX5ZtnxOTD90A6JgMyIZsFMS6gCbAK502pGDDspRFAzwWmGeH58F2QRjiND3YWBAHcF1C4ZBWv+g5/a2T07M3ceLh2QRyTCTlgBycJCBWTDy/nxzqum23tAPBR9arnqB/1yuzlB2vmxzESd4FbCAjnAlK0/lgXq7DzKl52vtn24HfF4g5wU+UkIIXQSMWnengthOKNUeDRV1bsLoxT76ICCrRChagigF9dvgtSA3g2OCUOQIIiCkqrP+s6brXLkcXvRLgg7i38VS6s8Lb6rVb27Y5uCD+3ahuihGdx3IWwwKWgiII6eMDV5sev0zv/80MSZCBMdz2nMC4FxVXhxjjbv+l9D8FMDtupeIGXIMhTUAUkwNgDcYBLnnthQekKF6IOvvQIvGRBYQUBJKEImI6ULRAK8XgLUD6nFf25+vKlxOYHm6XJcdO3T/kAAAAASUVORK5CYII=')/*../images/arrow_down.png*/
 		;
 	}
+
 	@media #{$IsPhablet} {
-		// Override absolute layouts, reset width/size/margins etc.
+		/* Override absolute layouts, reset width/size/margins etc. */
 		margin: auto !important;
 		padding: $FrameSpacing*2/3 !important;
 		width: auto !important;
@@ -82,6 +90,7 @@ terminal-controller {
 	-ms-text-overflow: ellipsis;
 	-o-text-overflow: ellipsis;
 	text-overflow: ellipsis;
+
 	&.ctrl-item-separator {
 		margin: 0;
 		padding: 0;
@@ -89,7 +98,9 @@ terminal-controller {
 	}
 }
 
-// Display line item with a min/max bar
+
+/* Display line item with a min/max bar */
+
 .ctrl-item-min-max-bar {
 	position: absolute;
 	display: block;
