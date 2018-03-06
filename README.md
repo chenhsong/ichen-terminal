@@ -1,7 +1,8 @@
 # iChen&reg; System 4.1 Terminal UI
 
 Language: TypeScript 2.7 or above  
-Framework: Angular 5.2 or above
+Framework: Angular 6.0 or above  
+Major Packages: angular2-websocket
 
 This is a web application that connects to an iChen&reg; System using OpenProtocol&trade;
 and displays the current status of each connected machine on a canvas.
