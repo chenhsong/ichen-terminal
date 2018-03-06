@@ -2,8 +2,7 @@
 import { Http } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/do";
+import { tap, map } from "rxjs/operators";
 import { DataStoreService } from "./services/data-store-service";
 import { NetworkService, NetworkState } from "./services/network-service";
 import
@@ -104,11 +103,13 @@ export class AppComponent
 
 		// Load text maps if necessary
 		if (typeof Config.textMaps === "string") {
-			http.get(Config.textMaps).map(r => r.json() as Dictionary<DictionaryWithDefault<Terminal.ITextMap>>).subscribe(json =>
-			{
-				Config.textMaps = json;
-				console.log("Text maps loaded.", Config.textMaps);
-			}, console.error.bind(console));
+			http.get(Config.textMaps)
+				.pipe(map(r => r.json() as Dictionary<DictionaryWithDefault<Terminal.ITextMap>>))
+				.subscribe(json =>
+				{
+					Config.textMaps = json;
+					console.log("Text maps loaded.", Config.textMaps);
+				}, console.error.bind(console));
 		}
 
 		// Monitor network state
@@ -116,7 +117,7 @@ export class AppComponent
 
 		// Process messages
 		this.network.onData
-			.do(msg => console.log(msg))
+			.pipe(tap(msg => console.log(msg)))
 			.subscribe(msg => this.processMessage(msg), console.error.bind(console));
 
 		// Start refresh loop - default to every 1s

@@ -1,5 +1,5 @@
 ﻿import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import "rxjs/add/operator/filter";
+import { filter } from "rxjs/operators";
 import { DataStoreService } from "../services/data-store-service";
 import { HTML } from "../app.config";
 import { buildTemplate } from "./controller-template";
@@ -18,7 +18,7 @@ export class ControllerComponent
 	constructor(cd: ChangeDetectorRef, dataStore: DataStoreService<number, IControllerState>)
 	{
 		dataStore.onChange
-			.filter(id => this.state && (id <= 0 || this.state.controllerId === id))
+			.pipe(filter(id => this.state && (id <= 0 || this.state.controllerId === id)))
 			.subscribe(id => cd.markForCheck());
 	}
 

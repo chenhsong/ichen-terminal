@@ -1,7 +1,7 @@
 ﻿import { Inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
-import "rxjs/add/operator/filter";
+import { map, filter } from "rxjs/operators";
 import { $WebSocket, WebSocketConfig } from "angular2-websocket/angular2-websocket";
 import { Config } from "../app.config";
 
@@ -36,8 +36,11 @@ export class NetworkService<T>
 
 	private reconnect(url: string)
 	{
+		console.debug(`Reconnecting WebSocket to [${url}]...`);
+
 		if (this.webSocket) {
 			try {
+				console.debug("Closing existing WebSocket connection...");
 				this.webSocket.close(true);
 			} catch (ex) {
 				console.error("Error closing WebSocket connection.", ex);
@@ -52,24 +55,29 @@ export class NetworkService<T>
 		// Connect the WebSocket
 		this.connectionStream.next(NetworkState.Connecting);
 		ws.connect();
+		console.debug(`Started new WebSocket to [${url}]...`);
 
 		// Wire up events
 		ws.onOpen(() =>
 		{
+			console.debug("WebSocket connection is open.");
+
 			this.isConnectionAlive = true;
 
 			// Prepare the messages stream
-			ws.getDataStream().map(m =>
-			{
-				// Parse JSON message
-				try {
-					return JSON.parse(m.data) as T;
-				} catch (err) {
-					console.error(`Cannot parse JSON message (${err}):\n${m.data}`);
-					return null;
-				}
-			}).filter(m => !!m)
-				.subscribe(x => this.dataStream.next(x as T));
+			ws.getDataStream().pipe(
+				map(m =>
+				{
+					// Parse JSON message
+					try {
+						return JSON.parse(m.data) as T;
+					} catch (err) {
+						console.error(`Cannot parse JSON message (${err}):\n${m.data}`);
+						return null;
+					}
+				}),
+				filter(m => !!m)
+			).subscribe(x => this.dataStream.next(x as T));
 
 			// Reset reconnection interval
 			this.reconnectionInterval = Config.settings.ServerReconnectionInterval;
@@ -80,9 +88,11 @@ export class NetworkService<T>
 
 			this.connectionStream.next(NetworkState.Online);
 		});
+
 		ws.onError((err: any) =>
 		{
 			this.isConnectionAlive = false;
+
 			if (this.webSocketInProgress === ws) {
 				this.lastConnectionAttemptTime = Date.now();
 				this.webSocketInProgress = null;
@@ -90,10 +100,14 @@ export class NetworkService<T>
 			} else {
 				console.error("Error in WebSocket communications.", err);
 			}
+
 			this.connectionStream.next(NetworkState.Error);
 		});
+
 		ws.onClose(() =>
 		{
+			console.debug("WebSocket connection is closed.");
+
 			this.isConnectionAlive = false;
 			this.connectionStream.next(NetworkState.Offline);
 		});
