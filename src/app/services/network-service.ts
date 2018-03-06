@@ -2,7 +2,7 @@
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 import { map, filter } from "rxjs/operators";
-import { $WebSocket, WebSocketConfig } from "angular2-websocket/angular2-websocket";
+import { $WebSocket, WebSocketSendMode } from "angular2-websocket/angular2-websocket";
 import { Config } from "../app.config";
 
 export enum NetworkState
@@ -51,11 +51,8 @@ export class NetworkService<T>
 
 		// Create a new WebSocket connection
 		const ws = new $WebSocket(url);
-
-		// Connect the WebSocket
-		this.connectionStream.next(NetworkState.Connecting);
-		ws.connect();
 		console.debug(`Started new WebSocket to [${url}]...`);
+		this.connectionStream.next(NetworkState.Connecting);
 
 		// Wire up events
 		ws.onOpen(() =>
@@ -64,23 +61,21 @@ export class NetworkService<T>
 
 			this.isConnectionAlive = true;
 
-			// Prepare the messages stream
-			ws.getDataStream().pipe(
-				map(m =>
-				{
-					// Parse JSON message
-					try {
-						return JSON.parse(m.data) as T;
-					} catch (err) {
-						console.error(`Cannot parse JSON message (${err}):\n${m.data}`);
-						return null;
-					}
-				}),
-				filter(m => !!m)
-			).subscribe(x => this.dataStream.next(x as T));
-
 			// Reset reconnection interval
 			this.reconnectionInterval = Config.settings.ServerReconnectionInterval;
+
+			// Prepare the messages stream
+			ws.setSend4Mode(WebSocketSendMode.Direct);
+
+			ws.onMessage((m: MessageEvent) =>
+			{
+				// Parse JSON message
+				try {
+					this.dataStream.next(JSON.parse(m.data) as T);
+				} catch (err) {
+					console.error(`Cannot parse JSON message (${err}):\n${m.data}`);
+				}
+			});
 
 			this.lastConnectionAttemptTime = 0;
 			this.webSocketInProgress = null;
@@ -168,6 +163,6 @@ export class NetworkService<T>
 		if (!this.isInitialized) throw new Error("Connection not yet made.");
 
 		console.log(this.webSocket!.getReadyState(), "Sending message", obj);
-		this.webSocket!.send(JSON.stringify(obj)).subscribe();
+		this.webSocket!.send(JSON.stringify(obj));
 	}
 }
