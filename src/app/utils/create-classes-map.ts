@@ -1,7 +1,7 @@
-﻿import formatStateVariable from "./formatStateVariable";
+﻿import formatStateVariable from "./format-state-variable";
 
 // Build a classes map for ngClass
-export default function (field: string | null, maps: Terminal.IClassMap | Terminal.IClassMap[], fixedClasses?: string[])
+export default function(field: string | null, maps: Terminal.IClassMap | Terminal.IClassMap[], fixedClasses?: string[])
 {
 	const mapObj = {} as { [className: string]: string[]; };
 	const mapsList = (maps instanceof Array) ? maps : [maps];

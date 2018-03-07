@@ -1,5 +1,5 @@
 ﻿import { HTML, CSS, Config } from "../app.config";
-import { formatStateVariable, createClassesMap } from "../utils/utils";
+import { FormatStateVariable, CreateClassesMap } from "../utils/utils";
 
 // Build the template for the main display box
 // Template = <div ctrl-frame><div line></div><div line></div>...</div>
@@ -9,7 +9,7 @@ export function buildTemplate(stateProperty: string, isCollapsedProperty: string
 
 	if (Config.controllers.default.maps) {
 		// If the frame has a class map, build the classes
-		classes = createClassesMap(null, Config.controllers.default.maps) || null;
+		classes = CreateClassesMap(null, Config.controllers.default.maps) || null;
 	}
 
 	classes = [classes, `"${CSS.controllerCollapsed}":${isCollapsedProperty}`].join(", ");
@@ -40,7 +40,7 @@ export function buildTemplate(stateProperty: string, isCollapsedProperty: string
 // Build the template for one line
 function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, calcRatioFunc: string, line: Terminal.ILineConfig)
 {
-	const field = formatStateVariable(line.field);
+	const field = FormatStateVariable(line.field);
 
 	// Create a class name from the field expression - replace non-text/digit characters to dashes
 	const fieldClass = line.field.replace(/[^A-Za-z0-9\-_]/g, "-").replace("--", "-");
@@ -64,7 +64,7 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 
 	if (line.maps && line.maps) {
 		// If the line has a class map, construct the ngClass object
-		const classes = createClassesMap(line.field, line.maps);
+		const classes = CreateClassesMap(line.field, line.maps);
 		tpl = `<div id="${id}" ${collapse} class="${extra_classes.join(" ")}" [ngClass]='{${classes}}'>`;
 	} else {
 		// Otherwise just simple classes added to the wrapping div

@@ -1,6 +1,6 @@
-﻿import dictionaryToMap from "./dictionaryToMap";
-import mixinDictionaryToMap from "./mixinDictionaryToMap";
-import formatStateVariable from "./formatStateVariable";
-import createClassesMap from "./createClassesMap";
+﻿import DictionaryToMap from "./dictionary-to-map";
+import MixinDictionaryToMap from "./mixin-dictionary-to-map";
+import FormatStateVariable from "./format-state-variable";
+import CreateClassesMap from "./create-classes-map";
 
-export { dictionaryToMap, mixinDictionaryToMap, formatStateVariable, createClassesMap };
+export { DictionaryToMap, MixinDictionaryToMap, FormatStateVariable, CreateClassesMap };

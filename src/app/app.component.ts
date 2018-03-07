@@ -18,7 +18,7 @@ import
 	IControllerStatusMessage,
 	IControllerActionMessage
 } from "./services/message-service";
-import { mixinDictionaryToMap } from "./utils/utils";
+import { MixinDictionaryToMap } from "./utils/utils";
 import { Config, HTML, CSS, Constants } from "./app.config";
 
 enableProdMode();
@@ -260,7 +260,7 @@ export class AppComponent
 			// New controllers List
 			case "ControllersList": {
 				// Update the list of controllers into the cache
-				mixinDictionaryToMap(msg.data, this.dataStore.getMap());
+				MixinDictionaryToMap(msg.data, this.dataStore.getMap());
 
 				// Delete any missing controller from the cache
 				for (const id in Array.from(this.dataStore.keys())) {
