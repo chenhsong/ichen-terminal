@@ -5,7 +5,7 @@ import { map, filter } from "rxjs/operators";
 import { $WebSocket, WebSocketSendMode } from "angular2-websocket/angular2-websocket";
 import { Config } from "../app.config";
 
-export enum NetworkState
+export const enum NetworkState
 {
 	Offline = 0, Online = 1, Connecting = 2, Error = 9
 }
