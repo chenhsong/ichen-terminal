@@ -1,7 +1,6 @@
 ﻿import { Component, ChangeDetectionStrategy, Input, Output, enableProdMode } from "@angular/core";
 import { Http } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
+import { Observable, Subject } from "rxjs";
 import { tap, map } from "rxjs/operators";
 import { DataStoreService } from "./services/data-store-service";
 import { NetworkService, NetworkState } from "./services/network-service";

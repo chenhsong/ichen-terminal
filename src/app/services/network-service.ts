@@ -1,6 +1,5 @@
 ﻿import { Inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
+import { Observable, Subject } from "rxjs";
 import { map, filter } from "rxjs/operators";
 import { $WebSocket, WebSocketSendMode } from "angular2-websocket/angular2-websocket";
 import { Config } from "../app.config";
