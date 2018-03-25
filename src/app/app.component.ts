@@ -35,7 +35,7 @@ let CachedAliveMessage: IAliveMessage;		// Reuse ALIVE message object
 			<span id="${HTML.btnChangeSettings}" (click)="onChangeSettings()">&bull; &bull; &bull;</span>
 
 			<img id="${HTML.imgLoading}"
-		       *ngIf="serverStatus=='${CSS.serverStatusConnecting}'"
+		       *ngIf="serverStatus=='${CSS.serverStatusConnecting}' || (serverStatus=='${CSS.serverStatusOnLine}' && !isInitialized)"
 		       src="${CSS.imagesUrl}/${CSS.imgLoading}" />
 		</div>
 
@@ -55,8 +55,8 @@ export class AppComponent
 	private layoutThreshold = 600;
 	private statusBar: HTMLDivElement | null = null;
 
-	public readonly controllersList = new Subject<IControllerState[]>();
-	public serverStatus = CSS.serverStatusOffLine;
+	private readonly controllersList = new Subject<IControllerState[]>();
+	private serverStatus = CSS.serverStatusOffLine;
 	private joinHandle: number | null = null;
 
 	constructor(http: Http, private network: NetworkService<IResponseMessage>, private message: MessageService, private dataStore: DataStoreService<number, IControllerState>)
@@ -112,7 +112,7 @@ export class AppComponent
 		}
 
 		// Monitor network state
-		this.network.onConnection.subscribe(state => this.monitorNetwork(state));
+		this.network.onConnection.subscribe(state => this.onNetworkStateChange(state));
 
 		// Process messages
 		this.network.onData
@@ -164,7 +164,7 @@ export class AppComponent
 	}
 
 	// Monitor the state of the WebSocket connection
-	private monitorNetwork(state: NetworkState)
+	private onNetworkStateChange(state: NetworkState)
 	{
 		switch (state) {
 			case NetworkState.Online: {
@@ -266,10 +266,10 @@ export class AppComponent
 					if (!msg.data.hasOwnProperty(id)) this.dataStore.delete(id);
 				}
 
-				this.updateControllersList();
-
 				// Now the controllers list is obtained, consider the system initialized
 				this.isInitialized = true;
+
+				this.updateControllersList();
 				break;
 			}
 
