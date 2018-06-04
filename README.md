@@ -21,5 +21,5 @@ The fields and display formats of different values for each field are customizab
 
 1. Install Angular: `npm install @angular/cli -g`
 2. Restore packages: `npm install`
-3. Build: `ng build --prod -aot false` (turn off AOT compilation)
+3. Build: `ng build --prod --aot false` (turn off AOT compilation)
 4. Completed app is in the `dist` directory
