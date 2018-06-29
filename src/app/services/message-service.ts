@@ -111,6 +111,7 @@ export interface IControllerStatusMessage extends IControllerSpecificMessage
 	alarm?: KeyValue<string, boolean>;
 	audit?: KeyValue<string, number>;
 	operatorId?: number;
+	operatorName?: string;
 	moldId?: string;
 	controller?: IControllerStatus;
 }

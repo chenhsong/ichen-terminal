@@ -307,6 +307,7 @@ export class AppComponent
 						ctrl.jobMode = "Offline";
 						ctrl.opMode = "Offline";
 						ctrl.operatorId = 0;
+						ctrl.operatorName = null;
 						ctrl.moldId = null;
 						ctrl.jobCardId = null;
 
@@ -333,6 +334,10 @@ export class AppComponent
 					}
 					if (msg.operatorId !== undefined) {
 						ctrl.operatorId = msg.operatorId || 0;
+						ctrl.lastOperatorChangedTime = msg.timestamp;
+					}
+					if (msg.operatorName !== undefined) {
+						ctrl.operatorName = msg.operatorName || null;
 						ctrl.lastOperatorChangedTime = msg.timestamp;
 					}
 					if (msg.moldId !== undefined) {

@@ -28,6 +28,7 @@ interface IControllerStatus
 	lastConnectionTime?: string;
 	moldId: string | null;
 	operatorId: number;
+	operatorName: string | null;
 }
 interface IControllerState extends IControllerStatus
 {

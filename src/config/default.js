@@ -64,7 +64,7 @@
 					"maps": null
 				},
 				{
-					"field": "operatorId",
+					"field": "operatorName",
 					"maps": [{
 							"value": 0,
 							"class": "color-gray text-invisible"
