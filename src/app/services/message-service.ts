@@ -1,4 +1,4 @@
-﻿import { Inject, Injectable } from "@angular/core";
+﻿import { Injectable } from "@angular/core";
 
 // Enum types
 export type CommandMessageTypes = "Alive" | "RequestControllersList" | "Join" | "RequestMoldData" | "ReadMoldData" | "JobCardsList" | "OperatorInfo";
@@ -107,12 +107,12 @@ export interface IControllerStatusMessage extends IControllerSpecificMessage
 	isDisconnected?: boolean;
 	opMode?: OpModes;
 	jobMode?: JobModes;
-	jobCardId?: string;
+	jobCardId?: string | null;
 	alarm?: KeyValue<string, boolean>;
 	audit?: KeyValue<string, number>;
 	operatorId?: number;
-	operatorName?: string;
-	moldId?: string;
+	operatorName?: string | null;
+	moldId?: string | null;
 	controller?: IControllerStatus;
 }
 export interface IUpdateLanguageMessage extends IMessageBase
