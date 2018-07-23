@@ -1,6 +1,6 @@
-﻿import { Component, ChangeDetectionStrategy, Input, Output, enableProdMode } from "@angular/core";
+﻿import { Component, Input, Output, enableProdMode } from "@angular/core";
 import { Http } from "@angular/http";
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { tap, map } from "rxjs/operators";
 import { DataStoreService } from "./services/data-store-service";
 import { NetworkService, NetworkState } from "./services/network-service";
@@ -328,7 +328,7 @@ export class AppComponent
 						ctrl.jobMode = msg.jobMode;
 						ctrl.lastJobModeChangedTime = msg.timestamp;
 					}
-					if (msg.jobCardId) {
+					if (msg.jobCardId !== undefined) {
 						ctrl.jobCardId = msg.jobCardId || null;
 						ctrl.lastJobCardChangedTIme = msg.timestamp;
 					}
