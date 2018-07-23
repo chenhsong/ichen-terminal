@@ -3,8 +3,8 @@
 // Build a classes map for ngClass
 export default function(field: string | null, maps: Terminal.IClassMap | Terminal.IClassMap[], fixedClasses?: string[])
 {
-	const mapObj = {} as { [className: string]: string[]; };
-	const mapsList = (maps instanceof Array) ? maps : [maps];
+	const mapClasses = {} as Dictionary<string[]>;
+	const mapsList = Array.isArray(maps) ? maps : [maps];
 
 	mapsList.forEach(map =>
 	{
@@ -24,31 +24,31 @@ export default function(field: string | null, maps: Terminal.IClassMap | Termina
 			});
 			if (negated) expressions = ["(" + expressions.join("&&") + ")"];
 
-			if (!(cls in mapObj)) mapObj[cls] = [];
-			mapObj[cls].push(...expressions);
+			mapClasses[cls] = mapClasses[cls] || [];
+			mapClasses[cls].push(...expressions);
 		});
 	});
 
 	// Add all the standard classes
-	if (fixedClasses) fixedClasses.filter(cls => !!cls).forEach(cls => mapObj[cls] = ["true"]);
+	if (fixedClasses) fixedClasses.filter(cls => !!cls).forEach(cls => mapClasses[cls] = ["true"]);
 
 	// Merge classes with the same expressions
-	const reverseMapObj = {} as { [expr: string]: string[]; };
+	const mapExpr = {} as Dictionary<string[]>;
 
-	for (const cls in mapObj) {
-		if (!mapObj.hasOwnProperty(cls)) continue;
+	for (const cls in mapClasses) {
+		if (!mapClasses.hasOwnProperty(cls)) continue;
 
-		const expr = mapObj[cls].join("||");
-		reverseMapObj[expr] = reverseMapObj[expr] || [];
-		reverseMapObj[expr].push(cls);
+		const expr = mapClasses[cls].join("||");
+		mapExpr[expr] = mapExpr[expr] || [];
+		mapExpr[expr].push(cls);
 	}
 
-	const classes: string[] = [];
+	const classes = [] as string[];
 
-	for (const expr in reverseMapObj) {
-		if (!reverseMapObj.hasOwnProperty(expr)) continue;
+	for (const expr in mapExpr) {
+		if (!mapExpr.hasOwnProperty(expr)) continue;
 
-		classes.push(`"${reverseMapObj[expr].join(" ")}":${expr}`);
+		classes.push(`"${mapExpr[expr].join(" ")}":${expr}`);
 	}
 
 	return classes.join(", ");

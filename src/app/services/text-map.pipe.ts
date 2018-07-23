@@ -1,10 +1,10 @@
 ﻿import { Pipe, PipeTransform } from "@angular/core";
-import { Config, CSS, Constants, getCurrentLang } from "../app.config";
+import { Config, Constants, getCurrentLang } from "../app.config";
 
 @Pipe({ name: "textMap" })
 export default class TextMapPipe implements PipeTransform
 {
-	transform(value: any, id?: string): string
+	transform(value: any, id?: string)
 	{
 		value = (value === null || value === undefined) ? "" : value.toString();
 		const maps = Config.textMaps;

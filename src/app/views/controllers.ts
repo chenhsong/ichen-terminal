@@ -1,5 +1,5 @@
 ﻿import { Component, Input, Output, ChangeDetectionStrategy } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 import { HTML, CSS } from "../app.config";
 
 @Component({

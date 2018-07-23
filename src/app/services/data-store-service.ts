@@ -1,4 +1,4 @@
-﻿import { Inject, Injectable, ChangeDetectorRef } from "@angular/core";
+﻿import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 
 @Injectable()
@@ -27,7 +27,7 @@ export class DataStoreService<K, T>
 	public values() { return this.dataStore.values(); }
 
 	// Changes detection
-	public get onChange() { return this.changesSubject as Observable<K>; }
+	public get onChange(): Observable<K> { return this.changesSubject; }
 
 	public raiseChangeEvent(id: K) { this.changesSubject.next(id); }
 }
