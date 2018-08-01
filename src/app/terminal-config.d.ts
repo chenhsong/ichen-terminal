@@ -68,9 +68,9 @@ declare namespace Terminal
 		class: string | null;
 	}
 
-	interface IClassMapValueBase extends IClassMapBase { value: any; }
+	interface IClassMapValueBase extends IClassMapBase { value: unknown; }
 
-	interface IClassMapNegatedValueBase extends IClassMapBase { notValue: any; }
+	interface IClassMapNegatedValueBase extends IClassMapBase { notValue: unknown; }
 
 	type IClassMap = IClassMapValueBase | IClassMapNegatedValueBase;
 

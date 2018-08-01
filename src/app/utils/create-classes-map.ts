@@ -13,9 +13,9 @@ export default function(field: string | null, maps: Terminal.IClassMap | Termina
 		map.class.split(/\s/).forEach(cls =>
 		{
 			// If it is "value", then ===; if it is "notValue", then !==
-			const negated = !map.hasOwnProperty("value");
+			const negated = !("value" in map);
 			const value = !negated ? (map as Terminal.IClassMapValueBase).value : (map as Terminal.IClassMapNegatedValueBase).notValue;
-			const valuesList: any[] = Array.isArray(value) ? value : [value];
+			const valuesList: unknown[] = Array.isArray(value) ? value : [value];
 
 			let expressions = valuesList.map(val =>
 			{

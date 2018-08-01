@@ -8,16 +8,8 @@ import
 {
 	MessageService,
 	IResponseMessage,
-	IAliveMessage,
-	IJoinMessage,
-	IJoinResponseMessage,
-	IRequestControllersListMessage,
-	IControllersListMessage,
-	ICycleDataMessage,
-	IControllerStatusMessage,
-	IControllerActionMessage
+	IAliveMessage
 } from "./services/message-service";
-import { MixinDictionaryToMap } from "./utils/utils";
 import { Config, HTML, CSS, Constants } from "./app.config";
 
 enableProdMode();
@@ -52,11 +44,9 @@ export class AppComponent
 	private lastAliveTime = 0;
 	private lastServerTickTime = 0;
 	private lastSyncControllersListTime = Date.now();
-	private layoutThreshold = 600;
-	private statusBar: HTMLDivElement | null = null;
 
-	private readonly controllersList = new Subject<IControllerState[]>();
-	private serverStatus = CSS.serverStatusOffLine;
+	public readonly controllersList = new Subject<IControllerState[]>();
+	public serverStatus = CSS.serverStatusOffLine;
 	private joinHandle: number | null = null;
 
 	constructor(http: Http, private network: NetworkService<IResponseMessage>, private message: MessageService, private dataStore: DataStoreService<number, IControllerState>)
@@ -66,28 +56,21 @@ export class AppComponent
 		CachedAliveMessage = this.message.create("Alive");
 
 		// Check if actionId is ever referred
-		let usesAction = false;
 		let maps = Config.controllers.default.maps;
+		if (maps) maps = Array.isArray(maps) ? maps : [maps];
 
-		if (maps) {
-			maps = Array.isArray(maps) ? maps : [maps];
-			usesAction = maps.some(m => m.field === Constants.actionIdField);
-		}
+		let usesAction = maps && maps.some(m => m.field === Constants.actionIdField);
 
 		if (!usesAction) {
 			const lines = Config.controllers.default.lines;
-			if (lines) usesAction = lines.some(line => line.field === Constants.actionIdField);
+			usesAction = lines && lines.some(line => line.field === Constants.actionIdField);
 
 			if (!usesAction) {
 				for (const line of lines) {
 					let mp = Config.controllers.default.maps;
-					if (mp) {
-						mp = Array.isArray(mp) ? mp : [mp];
-						if (mp.some(m => m.field === Constants.actionIdField)) {
-							usesAction = true;
-							break;
-						}
-					}
+					if (mp) mp = Array.isArray(mp) ? mp : [mp];
+					usesAction = mp && mp.some(m => m.field === Constants.actionIdField);
+					if (usesAction) break;
 				}
 			}
 		}
@@ -95,9 +78,7 @@ export class AppComponent
 		console.log("Uses Actions = " + usesAction);
 
 		// If no actionId referred, remove Actions from filter
-		if (!usesAction) {
-			Config.filter = Config.filter.split(",").map(f => f.trim()).filter(f => f !== Constants.actionFilter).join(", ");
-		}
+		if (!usesAction) Config.filter = Config.filter.split(",").map(f => f.trim()).filter(f => f !== Constants.actionFilter).join(", ");
 		console.log("Filters = " + Config.filter);
 
 		// Load text maps if necessary
@@ -174,7 +155,7 @@ export class AppComponent
 				// Loop send JOIN
 				if (this.joinHandle !== null) clearInterval(this.joinHandle);
 
-				this.joinHandle = <number><any>setInterval(() =>
+				this.joinHandle = setInterval(() =>
 				{
 					this.network.sendObject(
 						this.message.create("Join", {
@@ -185,7 +166,7 @@ export class AppComponent
 							filter: Config.filter
 						})
 					);
-				}, 1000);
+				}, 1000) as any as number;
 
 				this.serverStatus = CSS.serverStatusOnLine;
 				break;
@@ -259,11 +240,17 @@ export class AppComponent
 			// New controllers List
 			case "ControllersList": {
 				// Update the list of controllers into the cache
-				MixinDictionaryToMap(msg.data, this.dataStore.getMap());
+				for (const id in msg.data) {
+					if (!msg.data.hasOwnProperty(id)) continue;
+					const key = parseInt(id, 10);
+					if (!this.dataStore.has(key)) this.dataStore.set(key, {} as IControllerState);
+					this.dataStore.set(key, Object.assign(this.dataStore.get(key), msg.data[id]));
+				}
 
 				// Delete any missing controller from the cache
-				for (const id in Array.from(this.dataStore.keys())) {
-					if (!msg.data.hasOwnProperty(id)) this.dataStore.delete(id);
+				for (const key of this.dataStore.keys()) {
+					const id = key.toString();
+					if (!(id in msg.data)) this.dataStore.delete(key);
 				}
 
 				// Now the controllers list is obtained, consider the system initialized

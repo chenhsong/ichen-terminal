@@ -4,21 +4,22 @@ import { Config, Constants, getCurrentLang } from "../app.config";
 @Pipe({ name: "textMap" })
 export default class TextMapPipe implements PipeTransform
 {
-	transform(value: any, id?: string)
+	transform(value: unknown, id?: string): string
 	{
-		value = (value === null || value === undefined) ? "" : value.toString();
+		const key: string = (value === null || value === undefined) ? "" : (value as any).toString();
+
 		const maps = Config.textMaps;
-		if (!maps) return value;
+		if (!maps) return key;
 
 		if (typeof maps === "string") {
-			return value;
+			return key;
 		} else {
 			const maplang = maps[getCurrentLang()] || maps[Constants.defaultLang];
 			const map = maplang[id || "default"];
-			if (!map) return value;
-			if (!map.hasOwnProperty(value)) return value;
+			if (!map) return key;
+			if (!map.hasOwnProperty(key)) return key;
 
-			return map[value];
+			return map[key];
 		}
 	}
 }

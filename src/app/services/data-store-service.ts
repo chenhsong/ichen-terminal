@@ -4,25 +4,25 @@ import { Observable, Subject } from "rxjs";
 @Injectable()
 export class DataStoreService<K, T>
 {
-	private dataStore = new Map<string, T>();
+	private dataStore = new Map<K, T>();
 	private changesSubject = new Subject<K>();
 
-	public getMap() { return this.dataStore; }
-
 	// Mimic Map
-	public has(id: K | string): boolean { return !!this.dataStore.has(id.toString()); }
-	public get(id: K | string) { return this.dataStore.get(id.toString()); }
-	public set(id: K | string, value: T)
+	public has(id: K): boolean { return !!this.dataStore.has(id); }
+	public get(id: K) { return this.dataStore.get(id); }
+	public set(id: K, value: T)
 	{
-		this.dataStore.set(id.toString(), value);
-		if (typeof id !== "string") this.raiseChangeEvent(id);
+		this.dataStore.set(id, value);
+		this.raiseChangeEvent(id);
+		return this;
 	}
-	public delete(id: K | string)
+	public delete(id: K)
 	{
-		this.dataStore.delete(id.toString());
-		if (typeof id !== "string") this.raiseChangeEvent(id);
+		const r = this.dataStore.delete(id);
+		this.raiseChangeEvent(id);
+		return r;
 	}
-	public get size(): number { return this.dataStore.size; }
+	public get size() { return this.dataStore.size; }
 	public keys() { return this.dataStore.keys(); }
 	public values() { return this.dataStore.values(); }
 

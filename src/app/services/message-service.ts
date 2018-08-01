@@ -79,7 +79,7 @@ export interface IMoldDataMessage extends IDictionaryMessage
 {
 	$type: "MoldData";
 }
-export interface IPreferencesMessage extends IDataDictionaryMessage<any>
+export interface IPreferencesMessage extends IDataDictionaryMessage<unknown>
 {
 	$type: "Preferences";
 }

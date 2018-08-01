@@ -13,7 +13,7 @@ export default class CanvasStylesPipe implements PipeTransform
 		const r = {
 			background: `url(${CSS.imagesUrl}/${canvas.background}) no-repeat`,
 			backgroundSize: "100% 100%"
-		} as any;
+		} as PropertiesMap;
 
 		if (canvas.width && canvas.height) {
 			r.width = `${canvas.width}em`;

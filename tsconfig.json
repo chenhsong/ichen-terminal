@@ -13,6 +13,8 @@
 		"strict": true,
 		"noImplicitThis": true,
 		"noImplicitReturns": true,
+		"downlevelIteration": true,
+		"importHelpers": true,
 		"typeRoots": [
 			"node_modules/@types"
 		],

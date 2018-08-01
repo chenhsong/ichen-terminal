@@ -3,7 +3,7 @@
 @Pipe({ name: "flatten" })
 export default class FlattenPipe implements PipeTransform
 {
-	transform(value: any, field?: string)
+	transform(value: unknown, field?: string): string
 	{
 		if (value === null || value === undefined) return "";
 
@@ -14,7 +14,7 @@ export default class FlattenPipe implements PipeTransform
 				return value.filter(x => x !== null && x !== undefined).join(",");
 			}
 		} else {
-			return value.toString();
+			return (value as any).toString();
 		}
 	}
 }

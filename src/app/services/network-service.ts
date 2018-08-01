@@ -82,7 +82,7 @@ export class NetworkService<T>
 			this.connectionStream.next(NetworkState.Online);
 		});
 
-		ws.onError((err: any) =>
+		ws.onError((err: unknown) =>
 		{
 			this.isConnectionAlive = false;
 
