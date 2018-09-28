@@ -243,8 +243,9 @@ export class AppComponent
 				for (const id in msg.data) {
 					if (!msg.data.hasOwnProperty(id)) continue;
 					const key = parseInt(id, 10);
-					if (!this.dataStore.has(key)) this.dataStore.set(key, {} as IControllerState);
-					this.dataStore.set(key, Object.assign(this.dataStore.get(key), msg.data[id]));
+					const ctrl = this.dataStore.get(key) || {} as IControllerState;
+					Object.assign(ctrl, msg.data[id]);
+					this.dataStore.set(key, ctrl);
 				}
 
 				// Delete any missing controller from the cache
@@ -267,17 +268,11 @@ export class AppComponent
 
 				// Is there a controller object attached?
 				if (msg.controller) {
-					const ctrl = msg.controller;
-
 					// Add it into the controllers list if not already there
-					if (!this.dataStore.has(id)) {
-						const state = {} as IControllerState;
-						this.dataStore.set(id, state);
-						console.log(`Controller ${ctrl.displayName} [${id}] has joined.`);
-					}
-
-					Object.assign(this.dataStore.get(id), ctrl);
-
+					const ctrl = this.dataStore.get(id) || {} as IControllerState;
+					console.log(`Controller ${msg.controller.displayName} [${id}] has joined.`);
+					Object.assign(ctrl, msg.controller);
+					this.dataStore.set(id, ctrl);
 					this.updateControllersList();
 				}
 
