@@ -1,7 +1,3 @@
-% iChen 4.1 Terminal Configuration Reference
-% Chen Hsong
-% 2016
-
 iChen&reg; 4.1 Terminal Configuration Reference
 =================================================
 
