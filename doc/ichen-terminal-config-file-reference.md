@@ -2,7 +2,7 @@
 % Chen Hsong
 % 2016
 
-iChen^&reg;^ 4.1 Terminal Configuration Reference
+iChen&reg; 4.1 Terminal Configuration Reference
 =================================================
 
 Copyright &copy; Chen Hsong Holdings Ltd.  All rights reserved.  
@@ -10,24 +10,18 @@ Document Version: 4.1
 Last Edited: 2018-01-23
 
 
-Table of Contents
------------------
-
-<div id="toc-placeholder"></div>
-
-
-Introduction {.prose}
+Introduction
 ------------
 
-The **Terminal** is an HTML-based interface for the iChen^&reg;^ System 4.1.
+The **Terminal** is an HTML-based interface for the iChen&reg; System 4.1.
 It continuously shows the individual status of all connected machines in an
-iChen^&reg;^ network.
+iChen&reg; network.
 
-The display format of the iChen^&reg;^ 4.1 **Terminal** is configurable via
+The display format of the iChen&reg; 4.1 **Terminal** is configurable via
 a configuration file which is constructed in **JSON** format.
 
 
-## Configuration File Format  {#FileFormat}
+## Configuration File Format
 
 ### JSON
 
@@ -46,7 +40,7 @@ a configuration file which is constructed in **JSON** format.
 
 |Field Name         |  JSON type |Optional|       Description          |
 |:------------------|:----------:|:------:|:---------------------------|
-|`url`              |`string`    |No      |IP address and communications port of the iChen^&reg;^ 4.1 server.<br />Must be in the format "`ws://xxx.xxx.xxx.xxx:port`" (standard WebSocket URL format).<br />The default port used is 5788.|
+|`url`              |`string`    |No      |IP address and communications port of the iChen&reg; 4.1 server.<br />Must be in the format "`ws://xxx.xxx.xxx.xxx:port`" (standard WebSocket URL format).<br />The default port used is 5788.|
 |`filter`           |`string`    |Yes     |A *comma-delimited* string containing one or more of the `Filters` enum indicating the type(s) of messages that the **Terminal** is interested in receiving. If omitted, `All` is assumed.<br />See the [Enum Reference](code/enums.html#Filters) for details).|
 |`settings`         |`Object`    |No      |System settings for the **Terminal**.<br />See [below](#Settings) for details.|
 |`canvas`           |`Object`    |Yes     |Custom image to show on the **Terminal** (for instance, a factory floor plan).<br />See [below](#Canvas) for details.|
@@ -54,7 +48,7 @@ a configuration file which is constructed in **JSON** format.
 |`textMaps`         |Object Dictionary|Yes|Text descriptions of user-defined ID's and/or codes.<br />See [below](#TextMaps) for details.|
 
 
-## Settings {#Settings}
+## Settings
 
 ### JSON
 
@@ -71,13 +65,13 @@ a configuration file which is constructed in **JSON** format.
 
 |Field Name                    |  JSON type |Optional|Default Value|       Description          |
 |:-----------------------------|:----------:|:------:|:-----------:|:---------------------------|
-|`AliveSendInterval`           |`number`    |Yes     |5000 (5sec)  |Send an [Alive](messages_reference.html#alivemessage) message to the iChen^&reg;^ 4.1 server every this number of milliseconds, or zero to stop sending [Alive](messages_reference.html#alivemessage) messages.<br /><br />*WARNING:* If the iChen^&reg;^ 4.1 server does not receive [Alive](messages_reference.html#alivemessage) messages after a time-out period (default to be 10 seconds), then the server may decide to terminate the connection or stop sending update messages.|
-|`ServerAliveTimeout`          |`number`    |Yes     |60000 (1min) |The iChen^&reg;^ 4.1 server sends an [Alive](messages_reference.html#alivemessage) message periodically (default 5 seconds). If [Alive](messages_reference.html#alivemessage) messages are not received after this time-out period (zero to disable), then the server may be assumed dead or hung.|
-|`SyncControllersListInterval` |`number`    |Yes     |300000 (5min)|Send a [RequestControllersList](messages_reference.html#requestcontrollerslist) message to the iChen^&reg;^ 4.1 server every this number of milliseconds, or zero to stop sending [RequestControllersList](messages_reference.html#requestcontrollerslist) messages. This is typically used to synchronize the list of connected controllers with the server's own list.|
-|`ServerReconnectionInterval`  |`number`    |Yes     |15000 (15sec)|When the conenction to the iChen^&reg;^ 4.1 server is broken, attempt to reconnect after this number of milliseconds.|
+|`AliveSendInterval`           |`number`    |Yes     |5000 (5sec)  |Send an [Alive](messages_reference.html#alivemessage) message to the iChen&reg; 4.1 server every this number of milliseconds, or zero to stop sending [Alive](messages_reference.html#alivemessage) messages.<br /><br />*WARNING:* If the iChen&reg; 4.1 server does not receive [Alive](messages_reference.html#alivemessage) messages after a time-out period (default to be 10 seconds), then the server may decide to terminate the connection or stop sending update messages.|
+|`ServerAliveTimeout`          |`number`    |Yes     |60000 (1min) |The iChen&reg; 4.1 server sends an [Alive](messages_reference.html#alivemessage) message periodically (default 5 seconds). If [Alive](messages_reference.html#alivemessage) messages are not received after this time-out period (zero to disable), then the server may be assumed dead or hung.|
+|`SyncControllersListInterval` |`number`    |Yes     |300000 (5min)|Send a [RequestControllersList](messages_reference.html#requestcontrollerslist) message to the iChen&reg; 4.1 server every this number of milliseconds, or zero to stop sending [RequestControllersList](messages_reference.html#requestcontrollerslist) messages. This is typically used to synchronize the list of connected controllers with the server's own list.|
+|`ServerReconnectionInterval`  |`number`    |Yes     |15000 (15sec)|When the conenction to the iChen&reg; 4.1 server is broken, attempt to reconnect after this number of milliseconds.|
 
 
-## Canvas {#Canvas}
+## Canvas
 
 ### JSON
 
@@ -98,7 +92,7 @@ a configuration file which is constructed in **JSON** format.
 |`height`           |`number`    |Yes     |Height of the image in characters spacing. This is to facilitate exact placement of individual machines on the image. If zero, then the image will completely fill the background.|
 
 
-## Controllers {#Controllers}
+## Controllers
 
 ### JSON
 
@@ -119,7 +113,7 @@ a configuration file which is constructed in **JSON** format.
 |Any other key      |`Object`    |Yes     |Specific display format of any individual machine (based on ID number).<br />See [Individual Machine Display Format](#IndividualMachineLayout) for details.|
 
 
-## Machine Display Format {#MachineLayout}
+## Machine Display Format
 
 ### JSON
 
@@ -169,9 +163,9 @@ a configuration file which is constructed in **JSON** format.
 |`overlay`          |`string`    |Yes     |A *space-delimited* list of display formats for the overlay bar of the bar graph (mainly to set colors).<br />See [Display Formats](#Classes) for details.|
 
 
-## Individual Machine Display Format {#IndividualMachineLayout}
+## Individual Machine Display Format
 
-### Usage {.prose}
+### Usage
 
 When a machine's unique ID is present in the [Controllers](#Controllers) section,
 it is possible to control precisely the placement/location and size of the
@@ -198,9 +192,9 @@ This is useful for accurately placing machines onto a floor plan background imag
 |`size`             |`number`    |Yes     |Magnifier of the display box (including text size, width, etc.). 1.0 = original size.|
 
 
-## Text Maps {#TextMaps}
+## Text Maps
 
-### Usage {.prose}
+### Usage
 
 *Text maps* are specified as an object dictionary, with property names being the unique
 ID of the *text map*, and the values of the properties being object dictionaries specifying
@@ -237,9 +231,9 @@ name of a JSON file containing a text map object dictionary.
 ~~~~~~~
 
 
-## Display Filters {#DisplayFilters}
+## Display Filters
 
-### Usage {.prose}
+### Usage
 
 *Display filters* are used to format values into text.
 
@@ -256,9 +250,9 @@ name of a JSON file containing a text map object dictionary.
 |`flatten`          |Display an array as a text string.|`flatten:'`*field*`'`|
 
 
-## Value Map {#ValueMap}
+## Value Map
 
-### Usage {.prose}
+### Usage
 
 A *Value Map* attempts to match the current value of a field variable with the a specified value.
 When the current value of the specified field variable matches (or doesn't match, if `notValue` is
@@ -286,12 +280,12 @@ to highlight the value (usually by changing colors).
 |`notValue`         |`string`    |Yes     |Any value to dis-match the current value of the field variable specified (i.e. as long as the current value of the field variable specified does *not* match this value).<br /><br />*WARNING:* `null` and `undefined` are considered valid values. If `value` is used, then this field be *omitted* instead of setting to `null` or `undefined`.|
 
 
-## Machine States {#States}
+## Machine States
 
-### Description {.prose}
+### Description
 
 For each machine, a set of *states* is constantly kept for display, and
-continuously updated by the iChen^&reg;^ server.
+continuously updated by the iChen&reg; server.
 
 ### Field Variables
 
@@ -307,7 +301,7 @@ continuously updated by the iChen^&reg;^ server.
 |`jobMode`       |`JobModes` enum|No      |Current user-defined job mode of the machine.<br />See the [Enum Reference](code/enums.html#JobModes) for details).|
 |`jobCardId`        |`string`    |Yes     |Unique ID of the machine's currently-loaded job card, or `null` or omitted if none.|
 |`lastCycleData`|Object Dictionary|Yes    |The last set of cycle data sent by the machine. Properties in the object dictionary are variable names, with the property values being the actual values of those variables.<br />See the [Cycle Data Reference](code/cycledata.html) for details).|
-|`lastConnectionTime`|`Date`     |Yes     |The time when the machine was connected to the iChen^&reg;^ server.|
+|`lastConnectionTime`|`Date`     |Yes     |The time when the machine was connected to the iChen&reg; server.|
 |`operatorId`       |`number`    |Yes     |Unique numeric ID of the machine's current operator, or zero or omitted if none.|
 |`moldId`           |`string`    |Yes     |Unique ID of the machine's currently-loaded mold data settings, or `null` or omitted if none.|
 |`actionId`         |`number`    |Yes     |The last action of the machine, `null` or omitted if unknown.<br />See the [Action Codes Reference](code/actions.html) for details).|
@@ -316,7 +310,7 @@ continuously updated by the iChen^&reg;^ server.
 |`activeAlarms`     |`Array`     |Yes     |An array (if any) of alarms that are currently active on the machine.<br />See [Alarm](#Alarm) for details.|
 
 
-## Alarm {#Alarm}
+## Alarm
 
 ### Fields
 
@@ -327,7 +321,7 @@ continuously updated by the iChen^&reg;^ server.
 |`value`            |`number`    |No      |0 = off, 1 = on.|
 
 
-## Display Formats {#Classes}
+## Display Formats
 
 ### Formats
 
@@ -376,14 +370,3 @@ continuously updated by the iChen^&reg;^ server.
 |`border-red`|Set border to red.|
 |`border-white`|Set border to white.|
 |`border-yellow`|Set border to yellow.|
-
-
-
-<script type="text/javascript">
-// Process the table of contents for HTML output
-(function() {
-	var toc = document.getElementById("TOC");
-	if (!toc) return;
-	document.getElementById("toc-placeholder").appendChild(toc);
-})();
-</script>
