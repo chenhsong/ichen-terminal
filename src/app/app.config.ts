@@ -18,7 +18,7 @@ export const HTML = {
 	controller: `${appClassPrefix}-controller`,
 	controllerId: "CONTROLLER",
 	btnChangeSettings: "btnChangeSettings",
-	imgLoading: "imgLoading"
+	loading: "loading"
 };
 
 export const CSS = {

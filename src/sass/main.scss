@@ -1,4 +1,4 @@
-﻿$ItemLineHeight: 1.2em;
+﻿$ItemLineHeight: 1rem;
 $StatusBarFontSize: 70%;
 
 body {
@@ -35,14 +35,29 @@ terminal {
 
 /* Loading indicator */
 
-#imgLoading {
-	display: block;
+#loading {
+	background-color: rgba(255, 255, 255, 0.8);
 	position: absolute;
-	left: 0.5em;
-	top: $ItemLineHeight+0.5em;
-	width: 5em;
-	height: 5em;
+	left: 0;
+	top: $ItemLineHeight;
+	right: 0;
+	bottom: 0;
 	z-index: 9;
+	text-align: center;
+	white-space: nowrap;
+
+	span {
+		display: inline-block;
+		height: 100%;
+		vertical-align: middle;
+	}
+
+	img {
+		display: inline-block;
+		width: 8em;
+		height: 8em;
+		vertical-align: middle;
+	}
 }
 
 

@@ -25,10 +25,12 @@ let CachedAliveMessage: IAliveMessage;		// Reuse ALIVE message object
 		     style="width:${Config.canvas && Config.canvas.width ? Config.canvas.width + "em" : "100%"};">
 
 			<span id="${HTML.btnChangeSettings}" (click)="onChangeSettings()">&bull; &bull; &bull;</span>
+		</div>
 
-			<img id="${HTML.imgLoading}"
-		       *ngIf="serverStatus=='${CSS.serverStatusConnecting}' || (serverStatus=='${CSS.serverStatusOnLine}' && !isInitialized)"
-		       src="${CSS.imagesUrl}/${CSS.imgLoading}" />
+		<div id="${HTML.loading}" *ngIf="serverStatus=='${CSS.serverStatusConnecting}' || (serverStatus=='${CSS.serverStatusOnLine}' && !isInitialized)">
+			<span>&nbsp;</span>
+			<img src="${CSS.imagesUrl}/${CSS.imgLoading}" />
+			<span>&nbsp;</span>
 		</div>
 
 		<${HTML.controllersList}
@@ -119,9 +121,6 @@ export class AppComponent
 	// Refresh loop
 	private refresh()
 	{
-		// Refresh the network
-		this.network.refresh();
-
 		const now = Date.now();
 
 		// Send an ALIVE message once every while
@@ -139,7 +138,7 @@ export class AppComponent
 
 		// Check if server is alive
 		if (Config.settings.ServerAliveTimeout && this.lastServerTickTime && now - this.lastServerTickTime > Config.settings.ServerAliveTimeout) {
-			this.network.terminate();
+			//this.network.terminate();
 			this.lastServerTickTime = 0;
 		}
 	}
@@ -147,6 +146,8 @@ export class AppComponent
 	// Monitor the state of the WebSocket connection
 	private onNetworkStateChange(state: NetworkState)
 	{
+		console.log("Network state changed", state);
+
 		switch (state) {
 			case NetworkState.Online: {
 				console.log("iChen server is on-line.");
