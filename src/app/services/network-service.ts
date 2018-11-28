@@ -1,6 +1,6 @@
 ﻿import { Injectable } from "@angular/core";
-import { Observable, Subject, Subscription } from "rxjs";
-import { retry } from "rxjs/operators";
+import { Observable, Subject, timer } from "rxjs";
+import { map, tap, retryWhen, delayWhen } from "rxjs/operators";
 import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from "rxjs/webSocket";
 import { Config } from "../app.config";
 
@@ -14,6 +14,7 @@ export class NetworkService<T>
 {
 	private webSocket: WebSocketSubject<T> | null = null;
 	private isConnectionAlive = false;
+	private reconnectInterval = 5000;
 
 	// Observables
 	private readonly connectionStream = new Subject<NetworkState>();
@@ -29,12 +30,14 @@ export class NetworkService<T>
 		const url = Config.url as string;
 
 		console.debug(`Connecting WebSocket to [${url}]...`);
+
 		const options: WebSocketSubjectConfig<T> = {
 			url: url,
 			openObserver: {
 				next: ev =>
 				{
 					console.debug("WebSocket connection is open.");
+					this.reconnectInterval = 5000;
 					this.isConnectionAlive = true;
 					this.connectionStream.next(NetworkState.Online);
 				}
@@ -44,14 +47,34 @@ export class NetworkService<T>
 				{
 					console.debug("WebSocket connection is closed.");
 					this.isConnectionAlive = false;
-					this.connectionStream.next(NetworkState.Connecting);
+					this.connectionStream.next(NetworkState.Offline);
 				}
 			}
 		};
 
 		this.webSocket = webSocket(options);
 
-		this.webSocket.pipe(retry()).subscribe(m =>
+		this.webSocket.pipe(retryWhen(errors => errors.pipe(
+			tap(err =>
+			{
+				console.error("Error in WebSocket connection!", err);
+				this.connectionStream.next(NetworkState.Error);
+			}),
+			map(() =>
+			{
+				const interval = this.reconnectInterval;
+				console.debug(`Waiting ${Math.round(interval / 100) / 10} seconds before reconnecting...`);
+				return interval;
+			}),
+			delayWhen(interval => timer(interval)),
+			tap(() =>
+			{
+				if (this.reconnectInterval < 60000) this.reconnectInterval *= 1.1;		// Progressively enlarge reconnection interval
+
+				console.log("Reconnecting WebSocket...");
+				this.connectionStream.next(NetworkState.Connecting);
+			})
+		))).subscribe(m =>
 		{
 			console.log("WebSocket message received", m);
 

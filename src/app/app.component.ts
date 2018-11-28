@@ -138,7 +138,7 @@ export class AppComponent
 
 		// Check if server is alive
 		if (Config.settings.ServerAliveTimeout && this.lastServerTickTime && now - this.lastServerTickTime > Config.settings.ServerAliveTimeout) {
-			//this.network.terminate();
+			// this.network.terminate();
 			this.lastServerTickTime = 0;
 		}
 	}
