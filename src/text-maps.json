@@ -16,7 +16,6 @@
 			"CBmold800": "CBmold 800",
 			"Unknown": "???"
 		},
-
 		"OpModes": {
 			"Unknown": "???",
 			"Manual": "Manual",
@@ -25,11 +24,10 @@
 			"Others": "Others",
 			"Offline": "Off-line"
 		},
-
 		"JobModes": {
 			"Unknown": "???",
 			"Offline": "Off-line",
-			"ID01": "Idle",
+			"ID01": "No Order",
 			"ID02": "Production",
 			"ID03": "Color Chg.",
 			"ID04": "Mold Maint",
@@ -45,7 +43,6 @@
 			"ID14": "Other 2",
 			"ID15": "Other 3"
 		},
-
 		"Actions": {
 			"1000": "Idle",
 			"1001": "Open Break",
@@ -112,7 +109,6 @@
 			"1063": "Aux 22",
 			"1064": "Aux 23",
 			"1065": "Aux 24",
-
 			"2000": "Idle",
 			"2001": "Open Break",
 			"2002": "Open #2",
@@ -221,7 +217,6 @@
 			"2105": "S. Aux 10"
 		}
 	},
-
 	"zh-tw": {
 		"ControllerTypes": {
 			"Ai01": "Ai-01",
@@ -239,7 +234,6 @@
 			"CBmold800": "CBmold 800",
 			"Unknown": "不詳"
 		},
-
 		"OpModes": {
 			"Unknown": "不詳",
 			"Manual": "手動",
@@ -248,7 +242,6 @@
 			"Others": "其他",
 			"Offline": "離線"
 		},
-
 		"JobModes": {
 			"Unknown": "不詳",
 			"Offline": "離線",
@@ -268,7 +261,6 @@
 			"ID14": "其他二",
 			"ID15": "其他三"
 		},
-
 		"Actions": {
 			"1000": "靜止",
 			"1001": "開模 1 段",
@@ -335,7 +327,6 @@
 			"1063": "功能 22",
 			"1064": "功能 23",
 			"1065": "功能 24",
-
 			"2000": "靜止",
 			"2001": "開模 1 段",
 			"2002": "開模 2 段",
@@ -461,7 +452,6 @@
 			"CBmold800": "CBmold 800",
 			"Unknown": "不详"
 		},
-
 		"OpModes": {
 			"Unknown": "不详",
 			"Manual": "手动",
@@ -470,7 +460,6 @@
 			"Others": "其他",
 			"Offline": "离线"
 		},
-
 		"JobModes": {
 			"Unknown": "不详",
 			"Offline": "离线",
@@ -490,7 +479,6 @@
 			"ID14": "其他二",
 			"ID15": "其他三"
 		},
-
 		"Actions": {
 			"1000": "静止",
 			"1001": "开模 1 段",
@@ -557,7 +545,6 @@
 			"1063": "功能 22",
 			"1064": "功能 23",
 			"1065": "功能 24",
-
 			"2000": "静止",
 			"2001": "开模 1 段",
 			"2002": "开模 2 段",
