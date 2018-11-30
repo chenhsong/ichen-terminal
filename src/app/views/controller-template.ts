@@ -43,7 +43,9 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 	const field = FormatStateVariable(line.field);
 
 	// Create a class name from the field expression - replace non-text/digit characters to dashes
-	const fieldClass = line.field.replace(/[^A-Za-z0-9\-_]/g, "-").replace("--", "-");
+	let fieldClass = line.field.replace(/[^A-Za-z0-9\-_]/g, "-");
+	while (fieldClass.indexOf("--") >= 0) fieldClass = fieldClass.replace("--", "-");
+
 	const id = `${HTML.controllerId}-{{${stateProperty}.controllerId}}-${fieldClass}`;
 
 	// Template
@@ -62,7 +64,7 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 
 	const collapse = line.showAlways ? "" : `*ngIf='!${isCollapsedProperty}'`;
 
-	if (line.maps && line.maps) {
+	if (line.maps) {
 		// If the line has a class map, construct the ngClass object
 		const classes = CreateClassesMap(line.field, line.maps);
 		tpl = `<div id="${id}" ${collapse} class="${extra_classes.join(" ")}" [ngClass]='{${classes}}'>`;
@@ -72,7 +74,7 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 	}
 
 	// Min-max (if any)
-	if (line.max && line.min) {
+	if (line.max !== undefined && line.min !== undefined) {
 		const min = (typeof line.min === "string") ? `${stateProperty}.${line.min}` : line.min.toString();
 		const max = (typeof line.max === "string") ? `${stateProperty}.${line.max}` : line.max.toString();
 		const minmaxbarclasses = [CSS.controllerItemMinMaxBar, line.overlay].filter(cls => !!cls).join(" ");
