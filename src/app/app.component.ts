@@ -95,12 +95,10 @@ export class AppComponent
 		}
 
 		// Monitor network state
-		this.network.onConnection.subscribe(state => this.onNetworkStateChange(state));
+		this.network.onConnection.subscribe(state => this.onNetworkStateChange(state), console.error.bind(console));
 
 		// Process messages
-		this.network.onData
-			.pipe(tap(msg => console.log(msg)))
-			.subscribe(msg => this.processMessage(msg), console.error.bind(console));
+		this.network.onData.subscribe(msg => this.processMessage(msg), console.error.bind(console));
 
 		// Start refresh loop - default to every 1s
 		setInterval(() => this.refresh(), Config.settings.RefreshInterval || 1000);
