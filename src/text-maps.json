@@ -22,11 +22,11 @@
 			"SemiAutomatic": "Semi-Auto",
 			"Automatic": "Auto",
 			"Others": "Others",
-			"Offline": "Off-line"
+			"Offline": "Off-Line"
 		},
 		"JobModes": {
 			"Unknown": "???",
-			"Offline": "Off-line",
+			"Offline": "Off-Line",
 			"ID01": "No Order",
 			"ID02": "Production",
 			"ID03": "Color Chg.",
