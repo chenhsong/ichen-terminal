@@ -3,11 +3,13 @@ import { AppModule } from "./app/app.module";
 import { HTML, Config } from "./app/app.config";
 
 // Get WebSocket URL
+const protocol = (location.protocol === "https:") ? "wss" : "ws";
+
 if (!Config.url) {
 	// Default to same host at default port
-	Config.url = `ws://${location.hostname}:${HTML.defaultWebSocketPort}`;
+	Config.url = `${protocol}://${location.hostname}:${HTML.defaultWebSocketPort}`;
 } else if (typeof Config.url === "number") {
-	Config.url = `ws://${location.hostname}:${Config.url}`;
+	Config.url = `${protocol}://${location.hostname}:${Config.url}`;
 }
 
 // Bootstrap the main app component

@@ -23,7 +23,7 @@ a configuration file which is constructed in **JSON** format.
 
 ~~~~~~~ {.json}
 {
-	"url": "ws://x.x.x.x:port",        // IP address and port for iChen Server
+	"url": "ws://x.x.x.x:port",        // IP address and port for iChen Server (use `wss:` for HTTPS)
 	"filter": "All",                   // Type(s) of messages to receive (optional)
 	"settings": { ... },               // System settings
 	"canvas": { ... },                 // Custom background image (optional)
@@ -36,7 +36,7 @@ a configuration file which is constructed in **JSON** format.
 
 |Field Name         |  JSON type |Optional|       Description          |
 |:------------------|:----------:|:------:|:---------------------------|
-|`url`              |`string`    |No      |IP address and communications port of the iChen&reg; 4.1 server.<br />Must be in the format "`ws://xxx.xxx.xxx.xxx:port`" (standard WebSocket URL format).<br />The default port used is 5788.|
+|`url`              |`string`    |No      |IP address and communications port of the iChen&reg; 4.1 server.<br />Must be in the format `ws://xxx.xxx.xxx.xxx:port` or `wss://xxx.xxx.xxx.xxx:port` (standard WebSocket URL formats).<br />The default port used is 5788.|
 |`filter`           |`string`    |Yes     |A *comma-delimited* string containing one or more of the `Filters` enum indicating the type(s) of messages that the **Terminal** is interested in receiving. If omitted, `All` is assumed.<br />See the [Enum Reference](code/enums.html#Filters) for details).|
 |`settings`         |`Object`    |No      |System settings for the **Terminal**.<br />See [below](#Settings) for details.|
 |`canvas`           |`Object`    |Yes     |Custom image to show on the **Terminal** (for instance, a factory floor plan).<br />See [below](#Canvas) for details.|
