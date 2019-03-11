@@ -60,7 +60,7 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 		CSS.controllerItem,
 		`${CSS.controllerItem}-${fieldClass}`,
 		line.class
-	].filter(cls => !!cls);
+	].filter(cls => cls);
 
 	const collapse = line.showAlways ? "" : `*ngIf='!${isCollapsedProperty}'`;
 
@@ -77,7 +77,7 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 	if (line.max !== undefined && line.min !== undefined) {
 		const min = (typeof line.min === "string") ? `${stateProperty}.${line.min}` : line.min.toString();
 		const max = (typeof line.max === "string") ? `${stateProperty}.${line.max}` : line.max.toString();
-		const minmaxbarclasses = [CSS.controllerItemMinMaxBar, line.overlay].filter(cls => !!cls).join(" ");
+		const minmaxbarclasses = [CSS.controllerItemMinMaxBar, line.overlay].filter(cls => cls).join(" ");
 
 		tpl += `<div class="${minmaxbarclasses}"
 								 *ngIf="${field}!=null && ${field}!=undefined"

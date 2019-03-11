@@ -47,7 +47,7 @@ export function getCurrentLang() { return currLang; }
 
 if (localStorage) {
 	const lang = localStorage.getItem(langKey);
-	if (!!lang) currLang = lang;
+	if (lang) currLang = lang;
 	console.log(`Current language = ${currLang}`);
 }
 

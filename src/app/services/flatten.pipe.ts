@@ -8,8 +8,8 @@ export default class FlattenPipe implements PipeTransform
 		if (value === null || value === undefined) return "";
 
 		if (Array.isArray(value)) {
-			if (!!field) {
-				return value.filter(x => x !== null && x !== undefined).map(x => (typeof x === "object") ? x[field as string] : x).join(",");
+			if (field) {
+				return value.filter(x => x !== null && x !== undefined).map(x => (typeof x === "object") ? x[field] : x).join(",");
 			} else {
 				return value.filter(x => x !== null && x !== undefined).join(",");
 			}

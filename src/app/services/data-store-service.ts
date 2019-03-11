@@ -8,7 +8,7 @@ export class DataStoreService<K, T>
 	private changesSubject = new Subject<K>();
 
 	// Mimic Map
-	public has(id: K): boolean { return !!this.dataStore.has(id); }
+	public has(id: K) { return this.dataStore.has(id); }
 	public get(id: K) { return this.dataStore.get(id); }
 	public set(id: K, value: T)
 	{

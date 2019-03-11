@@ -30,7 +30,7 @@ export default function(field: string | null, maps: Terminal.IClassMap | Termina
 	});
 
 	// Add all the standard classes
-	if (fixedClasses) fixedClasses.filter(cls => !!cls).forEach(cls => mapClasses[cls] = ["true"]);
+	if (fixedClasses) fixedClasses.filter(cls => cls).forEach(cls => mapClasses[cls] = ["true"]);
 
 	// Merge classes with the same expressions
 	const mapExpr = {} as Dictionary<string[]>;
