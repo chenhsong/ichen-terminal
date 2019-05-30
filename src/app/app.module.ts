@@ -1,6 +1,6 @@
 ﻿import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { HttpModule } from "@angular/http";
+import { HttpClientModule } from "@angular/common/http";
 
 import { DataStoreService } from "./services/data-store-service";
 import { NetworkService } from "./services/network-service";
@@ -18,7 +18,7 @@ import { ControllerComponent } from "./views/controller";
 import { ControllersListComponent } from "./views/controllers";
 
 @NgModule({
-	imports: [BrowserModule, HttpModule],
+	imports: [BrowserModule, HttpClientModule],
 
 	declarations: [
 		// Components

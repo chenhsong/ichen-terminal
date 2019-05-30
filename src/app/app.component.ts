@@ -1,7 +1,6 @@
 ﻿import { Component, Input, Output, enableProdMode } from "@angular/core";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
-import { tap, map } from "rxjs/operators";
 import { DataStoreService } from "./services/data-store-service";
 import { NetworkService, NetworkState } from "./services/network-service";
 import
@@ -51,7 +50,7 @@ export class AppComponent
 	public serverStatus = CSS.serverStatusOffLine;
 	private joinHandle: number | null = null;
 
-	constructor(http: Http, private network: NetworkService<IResponseMessage>, private message: MessageService, private dataStore: DataStoreService<number, IControllerState>)
+	constructor(http: HttpClient, private network: NetworkService<IResponseMessage>, private message: MessageService, private dataStore: DataStoreService<number, IControllerState>)
 	{
 		if (!Config.filter) Config.filter = "Status, Alarms, Audit, Cycle, Actions";
 
@@ -85,11 +84,10 @@ export class AppComponent
 
 		// Load text maps if necessary
 		if (typeof Config.textMaps === "string") {
-			http.get(Config.textMaps)
-				.pipe(map(r => r.json() as Dictionary<DictionaryWithDefault<Terminal.ITextMap>>))
-				.subscribe(json =>
+			http.get<Dictionary<DictionaryWithDefault<Terminal.ITextMap>>>(Config.textMaps)
+				.subscribe(dict =>
 				{
-					Config.textMaps = json;
+					Config.textMaps = dict;
 					console.log("Text maps loaded.", Config.textMaps);
 				}, console.error.bind(console));
 		}
