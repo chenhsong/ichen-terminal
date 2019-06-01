@@ -10,7 +10,7 @@ export default class ControllerStylesPipe implements PipeTransform
 		if (!(state.controllerId in Config.controllers)) return null;
 
 		const cfg = Config.controllers[state.controllerId];
-		const map = {} as PropertiesMap;
+		const map: PropertiesMap = {};
 
 		if (cfg.x !== undefined && cfg.y !== undefined) {
 			map.position = "absolute";

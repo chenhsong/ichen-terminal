@@ -167,7 +167,11 @@ export class MessageService
 	public create(type: "OperatorInfo", params: { controllerId: number; operatorId: number; name: string; password: string; level: number; }, priority?: number): IOperatorInfoMessage;
 	public create(type: CommandMessageTypes, params?: Dictionary<any> | number, priority?: number): ICommandMessage
 	{
-		const msg = { $type: type, sequence: this.nextSequenceNumber, priority: priority || 0 } as ICommandMessage;
+		const msg = {
+			$type: type,
+			sequence: this.nextSequenceNumber,
+			priority: priority || 0
+		} as ICommandMessage;
 
 		switch (type) {
 			case "Alive": {

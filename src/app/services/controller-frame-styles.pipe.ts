@@ -10,7 +10,7 @@ export default class ControllerFrameStylesPipe implements PipeTransform
 		if (!(state.controllerId in Config.controllers)) return null;
 
 		const cfg = Config.controllers[state.controllerId];
-		const map = {} as PropertiesMap;
+		const map: PropertiesMap = {};
 
 		if (cfg.size !== undefined) map["font-size"] = `${cfg.size * 100}%`;
 		if (cfg.width !== undefined) map["width"] = `${cfg.width}em`;

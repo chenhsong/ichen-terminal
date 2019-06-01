@@ -7,7 +7,8 @@ import
 {
 	MessageService,
 	IResponseMessage,
-	IAliveMessage
+	IAliveMessage,
+	ICommandMessage
 } from "./services/message-service";
 import { Config, HTML, CSS, Constants } from "./app.config";
 
@@ -48,9 +49,14 @@ export class AppComponent
 
 	public readonly controllersList = new Subject<IControllerState[]>();
 	public serverStatus = CSS.serverStatusOffLine;
-	private joinHandle: number | null = null;
+	private joinHandle: any = null;
 
-	constructor(http: HttpClient, private network: NetworkService<IResponseMessage>, private message: MessageService, private dataStore: DataStoreService<number, IControllerState>)
+	constructor(
+		http: HttpClient,
+		private network: NetworkService<IResponseMessage, ICommandMessage>,
+		private message: MessageService,
+		private dataStore: DataStoreService<number, IControllerState>
+	)
 	{
 		if (!Config.filter) Config.filter = "Status, Alarms, Audit, Cycle, Actions";
 
@@ -163,7 +169,7 @@ export class AppComponent
 							filter: Config.filter
 						})
 					);
-				}, 1000) as any as number;
+				}, 1000);
 
 				this.serverStatus = CSS.serverStatusOnLine;
 				break;
@@ -237,13 +243,13 @@ export class AppComponent
 			// New controllers List
 			case "ControllersList": {
 				// Update the list of controllers into the cache
-				for (const id in msg.data) {
-					if (!msg.data.hasOwnProperty(id)) continue;
+				Object.keys(msg.data).forEach(id =>
+				{
 					const key = parseInt(id, 10);
 					const ctrl = this.dataStore.get(key) || {} as IControllerState;
 					Object.assign(ctrl, msg.data[id]);
 					this.dataStore.set(key, ctrl);
-				}
+				});
 
 				// Delete any missing controller from the cache
 				for (const key of this.dataStore.keys()) {

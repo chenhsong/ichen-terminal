@@ -10,20 +10,20 @@ export const enum NetworkState
 }
 
 @Injectable()
-export class NetworkService<T>
+export class NetworkService<R, T>
 {
-	private webSocket: WebSocketSubject<T> | null = null;
+	private webSocket: WebSocketSubject<R | T> | null = null;
 	private isConnectionAlive = false;
 	private reconnectInterval = 5000;
 
 	// Observables
 	private readonly connectionStream = new Subject<NetworkState>();
-	private readonly dataStream = new Subject<T>();
+	private readonly dataStream = new Subject<R>();
 
 	public get isInitialized() { return !!this.webSocket; }
 	public get isConnected() { return this.isConnectionAlive; }
-	public get onConnection() { return this.connectionStream as Observable<NetworkState>; }
-	public get onData() { return this.dataStream as Observable<T>; }
+	public get onConnection(): Observable<NetworkState> { return this.connectionStream; }
+	public get onData(): Observable<R> { return this.dataStream; }
 
 	constructor()
 	{
@@ -31,7 +31,7 @@ export class NetworkService<T>
 
 		console.debug(`Connecting WebSocket to [${url}]...`);
 
-		const options: WebSocketSubjectConfig<T> = {
+		const options: WebSocketSubjectConfig<R | T> = {
 			url: url,
 			openObserver: {
 				next: ev =>
@@ -54,27 +54,30 @@ export class NetworkService<T>
 
 		this.webSocket = webSocket(options);
 
-		this.webSocket.pipe(retryWhen(errors => errors.pipe(
-			tap(err =>
-			{
-				console.error("Error in WebSocket connection!", err);
-				this.connectionStream.next(NetworkState.Error);
-			}),
-			map(() =>
-			{
-				const interval = this.reconnectInterval;
-				console.debug(`Waiting ${Math.round(interval / 100) / 10} seconds before reconnecting...`);
-				return interval;
-			}),
-			delayWhen(interval => timer(interval)),
-			tap(() =>
-			{
-				if (this.reconnectInterval < 60000) this.reconnectInterval *= 1.1;		// Progressively enlarge reconnection interval
+		this.webSocket.pipe(
+			map(x => x as R),
+			retryWhen(errors => errors.pipe(
+				tap(err =>
+				{
+					console.error("Error in WebSocket connection!", err);
+					this.connectionStream.next(NetworkState.Error);
+				}),
+				map(() =>
+				{
+					const interval = this.reconnectInterval;
+					console.debug(`Waiting ${Math.round(interval / 100) / 10} seconds before reconnecting...`);
+					return interval;
+				}),
+				delayWhen(interval => timer(interval)),
+				tap(() =>
+				{
+					if (this.reconnectInterval < 60000) this.reconnectInterval *= 1.1;		// Progressively enlarge reconnection interval
 
-				console.log("Reconnecting WebSocket...");
-				this.connectionStream.next(NetworkState.Connecting);
-			})
-		))).subscribe(m =>
+					console.log("Reconnecting WebSocket...");
+					this.connectionStream.next(NetworkState.Connecting);
+				})
+			))
+		).subscribe(m =>
 		{
 			console.log("WebSocket message received", m);
 
@@ -101,13 +104,13 @@ export class NetworkService<T>
 		this.connectionStream.next(NetworkState.Connecting);
 	}
 
-	public sendObject(obj: unknown)
+	public sendObject(obj: T)
 	{
 		if (Config.settings.TestingMode) return;
 		if (!this.isInitialized) throw new Error("Connection not yet made.");
 		if (!this.isConnected) return;
 
 		console.log("Sending message", obj);
-		this.webSocket!.next(obj as T);
+		this.webSocket!.next(obj);
 	}
 }

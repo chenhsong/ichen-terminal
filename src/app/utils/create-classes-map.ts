@@ -3,7 +3,7 @@
 // Build a classes map for ngClass
 export default function(field: string | null, maps: Terminal.IClassMap | Terminal.IClassMap[], fixedClasses?: string[])
 {
-	const mapClasses = {} as Dictionary<string[]>;
+	const mapClasses: Dictionary<string[]> = {};
 	const mapsList = Array.isArray(maps) ? maps : [maps];
 
 	mapsList.forEach(map =>
@@ -33,23 +33,18 @@ export default function(field: string | null, maps: Terminal.IClassMap | Termina
 	if (fixedClasses) fixedClasses.filter(cls => cls).forEach(cls => mapClasses[cls] = ["true"]);
 
 	// Merge classes with the same expressions
-	const mapExpr = {} as Dictionary<string[]>;
+	const mapExpr: Dictionary<string[]> = {};
 
-	for (const cls in mapClasses) {
-		if (!mapClasses.hasOwnProperty(cls)) continue;
-
+	Object.keys(mapClasses).forEach(cls =>
+	{
 		const expr = mapClasses[cls].join("||");
 		mapExpr[expr] = mapExpr[expr] || [];
 		mapExpr[expr].push(cls);
-	}
+	});
 
-	const classes = [] as string[];
+	const classes: string[] = [];
 
-	for (const expr in mapExpr) {
-		if (!mapExpr.hasOwnProperty(expr)) continue;
-
-		classes.push(`"${mapExpr[expr].join(" ")}":${expr}`);
-	}
+	Object.keys(mapExpr).forEach(expr => classes.push(`"${mapExpr[expr].join(" ")}":${expr}`));
 
 	return classes.join(", ");
 }
