@@ -19,8 +19,7 @@ export default function(field: string | null, maps: Terminal.IClassMap | Termina
 
 			let expressions = valuesList.map(val =>
 			{
-				if (typeof val === "string") val = JSON.stringify(val);
-				return `${formatStateVariable(field, map.field)}${negated ? "!=" : "=="}${val}`;
+				return `${formatStateVariable(field, map.field)}${negated ? "!=" : "=="}${JSON.stringify(val)}`;
 			});
 			if (negated) expressions = ["(" + expressions.join("&&") + ")"];
 
