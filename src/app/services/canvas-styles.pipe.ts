@@ -1,5 +1,6 @@
 ﻿import { Pipe, PipeTransform } from "@angular/core";
 import { Config, CSS } from "../app.config";
+import { PropertiesMap } from "../interfaces";
 
 @Pipe({ name: "canvasStyles" })
 export default class CanvasStylesPipe implements PipeTransform

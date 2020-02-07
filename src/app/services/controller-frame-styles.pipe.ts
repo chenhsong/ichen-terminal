@@ -1,5 +1,6 @@
 ﻿import { Pipe, PipeTransform } from "@angular/core";
 import { Config } from "../app.config";
+import { IControllerState, PropertiesMap } from "../interfaces";
 
 @Pipe({ name: "controllerFrameStyles" })
 export default class ControllerFrameStylesPipe implements PipeTransform

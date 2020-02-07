@@ -1,4 +1,6 @@
-﻿// Constants
+﻿import * as Terminal from "./terminal-config";
+
+// Constants
 
 const appClassPrefix = "terminal";
 const controllerClassPrefix = "ctrl";

@@ -1,11 +1,13 @@
 ﻿import { Injectable } from "@angular/core";
+import { KeyValue } from "@angular/common";
+import { Dictionary, IControllerStatus, Languages, OpModes, JobModes } from "../interfaces";
 
-// Enum types
+//#region WebSocket message types
+
 export type CommandMessageTypes = "Alive" | "RequestControllersList" | "Join" | "RequestMoldData" | "ReadMoldData" | "JobCardsList" | "OperatorInfo";
 export type ValidMessageTypes = CommandMessageTypes | "ControllersList" | "JoinResponse" | "MoldData" | "CycleData" | "ControllerAction" | "ControllerStatus" | "RequestJobCardsList" | "LoginOperator";
 export type DeprecatedMessageTypes = "Preferences" | "SystemMessage" | "UpdateControllerInfo" | "UpdateLanguage";
 
-// WebSocket message base
 export interface IMessageBase
 {
 	sequence: number;
@@ -18,7 +20,6 @@ export type IDeprecatedMessage = IPreferencesMessage | ISystemMessageMessage | I
 export type IResponseMessage = IAliveMessage | IControllersListMessage | IJoinResponseMessage | IMoldDataMessage | ICycleDataMessage | IControllerActionMessage | IControllerStatusMessage | IRequestJobCardsListMessage | ILoginOperatorMessage;
 export type IMessage = ICommandMessage | IResponseMessage | IDeprecatedMessage;
 
-// WebSocket messages
 export interface IDataDictionaryMessage<T> extends IMessageBase
 {
 	data: Dictionary<T>;
@@ -148,6 +149,7 @@ export interface IOperatorInfoMessage extends IControllerSpecificMessage
 	password: string;
 	level: number;
 }
+//#endregion
 
 function throwParamError(msg: string) { throw new Error(`Invalid parameters for ${msg}`); }
 

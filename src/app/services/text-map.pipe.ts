@@ -14,8 +14,8 @@ export default class TextMapPipe implements PipeTransform
 		if (typeof maps === "string") {
 			return key;
 		} else {
-			const maplang = maps[getCurrentLang()] || maps[Constants.defaultLang];
-			const map = maplang[id || "default"];
+			const map_lang = maps[getCurrentLang()] || maps[Constants.defaultLang];
+			const map = map_lang[id || "default"];
 			if (!map) return key;
 			if (!map.hasOwnProperty(key)) return key;
 

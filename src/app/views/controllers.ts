@@ -1,6 +1,7 @@
 ﻿import { Component, Input, Output, ChangeDetectionStrategy } from "@angular/core";
 import { Observable } from "rxjs";
 import { HTML, CSS } from "../app.config";
+import { IControllerState } from "../interfaces";
 
 @Component({
 	selector: HTML.controllersList,

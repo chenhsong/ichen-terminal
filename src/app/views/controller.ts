@@ -2,6 +2,7 @@
 import { filter } from "rxjs/operators";
 import { DataStoreService } from "../services/data-store-service";
 import { HTML } from "../app.config";
+import { IControllerState } from "../interfaces";
 import { buildTemplate } from "./controller-template";
 
 @Component({

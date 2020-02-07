@@ -11,6 +11,8 @@ import
 	ICommandMessage
 } from "./services/message-service";
 import { Config, HTML, CSS, Constants } from "./app.config";
+import { IControllerState, Dictionary, DictionaryWithDefault } from "./interfaces";
+import * as Terminal from "./terminal-config";
 
 enableProdMode();
 

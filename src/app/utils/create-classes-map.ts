@@ -1,4 +1,6 @@
 ﻿import formatStateVariable from "./format-state-variable";
+import { Dictionary } from "../interfaces";
+import * as Terminal from "../terminal-config";
 
 // Build a classes map for ngClass
 export default function(field: string | null, maps: Terminal.IClassMap | Terminal.IClassMap[], fixedClasses?: string[])

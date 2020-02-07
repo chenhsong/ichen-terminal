@@ -1,5 +1,6 @@
 ﻿import { HTML, CSS, Config } from "../app.config";
 import { FormatStateVariable, CreateClassesMap } from "../utils/utils";
+import * as Terminal from "../terminal-config";
 
 // Build the template for the main display box
 // Template = <div ctrl-frame><div line></div><div line></div>...</div>
@@ -51,9 +52,9 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 	// Template
 	let tpl: string;
 
-	let textlink = field;
-	if (line.filter) textlink += "|" + line.filter;
-	textlink = "{{" + textlink + "}}";
+	let text_link = field;
+	if (line.filter) text_link += "|" + line.filter;
+	text_link = "{{" + text_link + "}}";
 
 	// Add classes map (if any)
 	const extra_classes = [
@@ -77,17 +78,17 @@ function buildLineTemplate(stateProperty: string, isCollapsedProperty: string, c
 	if (line.max !== undefined && line.min !== undefined) {
 		const min = (typeof line.min === "string") ? `${stateProperty}.${line.min}` : line.min.toString();
 		const max = (typeof line.max === "string") ? `${stateProperty}.${line.max}` : line.max.toString();
-		const minmaxbarclasses = [CSS.controllerItemMinMaxBar, line.overlay].filter(cls => cls).join(" ");
+		const min_max_bar_classes = [CSS.controllerItemMinMaxBar, line.overlay].filter(cls => cls).join(" ");
 
-		tpl += `<div class="${minmaxbarclasses}"
+		tpl += `<div class="${min_max_bar_classes}"
 								 *ngIf="${field}!=null && ${field}!=undefined"
 								 [ngStyle]="{width:${calcRatioFunc}(${field},${max},${min})+'%'}">
 						</div>`;
 
-		tpl += `<div class="${CSS.controllerMinMaxItem}">${textlink}</div>`;
+		tpl += `<div class="${CSS.controllerMinMaxItem}">${text_link}</div>`;
 	} else {
 		// Text info
-		tpl += textlink;
+		tpl += text_link;
 	}
 
 	// End template
