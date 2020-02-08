@@ -18,18 +18,23 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
+              "src/scripts/start.min.js",
               "src/config",
               "src/images",
               "src/stylesheets/main.min.css",
               "src/text-maps.json"
             ],
             "styles": [],
-            "scripts": [
-              "src/scripts/start.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -101,5 +106,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": "0c915b1c-e5be-40fa-b82f-c88f2e7b1604"
   }
 }
