@@ -10,16 +10,8 @@ and displays the current status of each connected machine on a canvas.
 The fields and display formats of different values for each field are customizable
 (see `doc/ichen-terminal-config-file-reference.md`).
 
-Non-Production Build
--------------------
-
-1. Install Angular: `npm install @angular/cli -g`
-2. Restore packages: `npm install`
-3. Build: `ng build`
-4. Completed app is in the `dist` directory
-
-Production Build
-----------------
+How to Build
+------------
 
 1. Install Angular: `npm install @angular/cli -g`
 2. Restore packages: `npm install`
