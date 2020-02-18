@@ -172,7 +172,7 @@ export class MessageService
 		const msg = {
 			$type: type,
 			sequence: this.nextSequenceNumber,
-			priority: priority || 0
+			priority: priority ?? 0
 		} as ICommandMessage;
 
 		switch (type) {

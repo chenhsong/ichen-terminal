@@ -25,7 +25,7 @@ export default function(field: string | null, maps: Terminal.IClassMap | Termina
 			});
 			if (negated) expressions = ["(" + expressions.join("&&") + ")"];
 
-			mapClasses[cls] = mapClasses[cls] || [];
+			mapClasses[cls] = mapClasses[cls] ?? [];
 			mapClasses[cls].push(...expressions);
 		});
 	});
@@ -39,7 +39,7 @@ export default function(field: string | null, maps: Terminal.IClassMap | Termina
 	Object.keys(mapClasses).forEach(cls =>
 	{
 		const expr = mapClasses[cls].join("||");
-		mapExpr[expr] = mapExpr[expr] || [];
+		mapExpr[expr] = mapExpr[expr] ?? [];
 		mapExpr[expr].push(cls);
 	});
 

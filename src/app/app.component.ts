@@ -68,17 +68,17 @@ export class AppComponent
 		let maps = Config.controllers.default.maps;
 		if (maps) maps = Array.isArray(maps) ? maps : [maps];
 
-		let usesAction = maps && maps.some(m => m.field === Constants.actionIdField);
+		let usesAction = !!maps?.some(m => m.field === Constants.actionIdField);
 
 		if (!usesAction) {
 			const lines = Config.controllers.default.lines;
-			usesAction = lines && lines.some(line => line.field === Constants.actionIdField);
+			usesAction = !!lines?.some(line => line.field === Constants.actionIdField);
 
 			if (!usesAction) {
 				for (const line of lines) {
 					let mp = Config.controllers.default.maps;
 					if (mp) mp = Array.isArray(mp) ? mp : [mp];
-					usesAction = mp && mp.some(m => m.field === Constants.actionIdField);
+					usesAction = !!mp?.some(m => m.field === Constants.actionIdField);
 					if (usesAction) break;
 				}
 			}
@@ -167,7 +167,7 @@ export class AppComponent
 							language: "EN",
 							version: "1.0.0",
 							orgId: Config.orgId,
-							password: Config.password || "",
+							password: Config.password ?? "",
 							filter: Config.filter
 						})
 					);
@@ -220,9 +220,6 @@ export class AppComponent
 				}
 
 				// Check if successful
-				msg.result = msg.result || 0;
-				msg.level = msg.level || 0;
-
 				if (msg.result < 100) {
 					switch (msg.result) {
 						case 99: alert("Each computer IP can only open one Terminal connection to the iChen Server. There is already an active Terminal for this computer, so connection to the iChen Server is denied."); break;
@@ -248,7 +245,7 @@ export class AppComponent
 				Object.keys(msg.data).forEach(id =>
 				{
 					const key = parseInt(id, 10);
-					const ctrl = this.dataStore.get(key) || {} as IControllerState;
+					const ctrl = this.dataStore.get(key) ?? {} as IControllerState;
 					Object.assign(ctrl, msg.data[id]);
 					this.dataStore.set(key, ctrl);
 				});
@@ -274,7 +271,7 @@ export class AppComponent
 				// Is there a controller object attached?
 				if (msg.controller) {
 					// Add it into the controllers list if not already there
-					const ctrl = this.dataStore.get(id) || {} as IControllerState;
+					const ctrl = this.dataStore.get(id) ?? {} as IControllerState;
 					console.log(`Controller ${msg.controller.displayName} [${id}] has joined.`);
 					Object.assign(ctrl, msg.controller);
 					this.dataStore.set(id, ctrl);
@@ -360,7 +357,7 @@ export class AppComponent
 							ctrl.alarm = alm;
 						} else {
 							// Set the alarm to the latest active one
-							ctrl.alarm = (ctrl.activeAlarms && ctrl.activeAlarms.length) ? ctrl.activeAlarms[0] : null;
+							ctrl.alarm = ctrl?.activeAlarms?.[0] ?? null;
 						}
 					}
 
